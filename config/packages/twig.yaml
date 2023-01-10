@@ -1,0 +1,14 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+
+    form_themes:
+        - "@Common/form.html.twig"
+
+    globals:
+        config: '@SchulIT\CommonBundle\Twig\ConfigVariable'
+        user: '@App\Twig\UserVariable'
+        profile_url: "%env(IDP_PROFILE_URL)%"
+
+when@test:
+    twig:
+        strict_variables: true

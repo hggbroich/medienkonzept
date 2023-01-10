@@ -1,0 +1,13 @@
+filter:
+  label: Filter
+  reset: Filter zurücksetzen
+  jgst: Jahrgangsstufe filtern
+  fach: Fach filtern
+
+modulinhalt:
+  kompetenzen: Kompetenzen
+  werkzeuge: Werkzeuge
+  materialien: Materialien
+
+lerneinheit:
+  stundenumfang: "%stunden% UStd."

@@ -1,0 +1,3 @@
+light_saml_sp:
+  username_mapper:
+    - "urn:id"

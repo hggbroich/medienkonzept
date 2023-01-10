@@ -1,0 +1,157 @@
+{% extends "main.html.twig" %}
+
+{% block content %}
+    <div class="container-fluid px-0">
+        {% set currentFilter = {
+            fach: (fachFilter.aktuellesFach is not null ? fachFilter.aktuellesFach.id : null),
+            jgst: (jgstFilter.aktuelleJahrgangsstufe is not null ? jgstFilter.aktuelleJahrgangsstufe.id : null)
+        } %}
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center border-bottom-0">
+                        <ul class="nav nav-pills card-header-pills flex-fill" data-trigger="resize-hide">
+                            {% for jgst in jgstFilter.jahrgangsstufen %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if jgstFilter.aktuelleJahrgangsstufe is not null and jgstFilter.aktuelleJahrgangsstufe.id == jgst.id%}active{% endif%}"
+                                       href="{{ path('dashboard', currentFilter|merge({ jgst: jgst.id })) }}">
+                                        {{ jgst.bezeichnung }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                {% for group in groups %}
+                    <div class="card">
+                        <div class="card-header font-weight-bold">
+                            {{ group.fach.bezeichnung }}
+                        </div>
+
+                        <div class="list-group list-group-flush">
+                            {% for lerneinheit in group.lerneinheiten %}
+                                {% for inhalt in lerneinheit.modulInhalte %}
+                                    <div class="list-group-item">
+                                        <div class="mb-2">
+                                            <span class="badge badge-primary">
+                                                {{ inhalt.modul.bezeichnung }}
+                                            </span>
+
+                                            <span class="badge badge-primary">
+                                                {{ lerneinheit.bezeichnung }}
+                                            </span>
+
+                                            <span class="badge badge-secondary">
+                                                {{ inhalt.kompetenzstufe.bezeichnung }}
+                                            </span>
+
+                                            <span class="badge badge-secondary">
+                                                {{ lerneinheit.funktion.bezeichnung }}
+                                            </span>
+
+                                            <span class="badge badge-secondary">
+                                                {{ 'lerneinheit.stundenumfang'|trans({'%stunden%': lerneinheit.stundenumfang}) }}
+                                            </span>
+                                        </div>
+
+                                        <h6 class="card-title">{{ inhalt.zusammenfassung }}</h6>
+
+                                        <p>{{ inhalt.bezeichnung|markdown_to_html }}</p>
+
+                                        <div class="container-fluid w-100 p-0">
+                                            <div class="row no-gutters">
+                                                <div class="col-md-4">
+                                                    {% for werkzeug in inhalt.werkzeuge %}
+                                                        <div class="d-flex flex-row">
+                                                            <div class="mr-1">
+                                                                <i class="fas fa-tools"></i>
+                                                            </div>
+                                                            <div>
+                                                                {{ werkzeug.bezeichnung }}
+
+                                                                {% if werkzeug.beschreibung is not empty %}
+                                                                    <div class="text-secondary">{{ werkzeug.beschreibung }}</div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    {% for material in inhalt.materialien %}
+                                                        <div class="d-flex flex-row">
+                                                            <div class="mr-1">
+                                                                <i class="fas fa-book"></i>
+                                                            </div>
+
+                                                            <div>
+                                                                {{ material.material.bezeichnung }}
+
+                                                                {% if material.detail is not empty %}
+                                                                    <div class="text-secondary">{{ material.detail }}</div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    {% for kompetenz in inhalt.kompetenzen %}
+                                                        <div class="d-flex flex-row">
+                                                            <div class="mr-1">
+                                                                <i class="fas fa-tag"></i>
+                                                            </div>
+                                                            <div title="{{ kompetenz.beschreibung }}">
+                                                                {{ kompetenz.bezeichnung }}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-3 sticky-sidebar">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-filter"></i> {{ 'filter.label'|trans }}</h5>
+
+                        <form method="get">
+                            <div class="form-group d-none">
+                                <select name="jgst" id="jgst" class="form-control custom-select" data-trigger="submit">
+                                    <option value="" placeholder>{{ 'filter.jgst'|trans }}</option>
+                                    {% for jgst in jgstFilter.jahrgangsstufen %}
+                                        <option value="{{ jgst.id }}" {% if jgstFilter.aktuelleJahrgangsstufe is not null and jgstFilter.aktuelleJahrgangsstufe.id == jgst.id %}selected{% endif %}>{{ jgst.bezeichnung }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <select name="fach" id="fach" class="form-control custom-select" data-trigger="submit">
+                                    <option value="" placeholder>{{ 'filter.fach'|trans }}</option>
+                                    {% for fach in fachFilter.faecher %}
+                                        <option value="{{ fach.id }}" {% if fachFilter.aktuellesFach is not null and fachFilter.aktuellesFach.id == fach.id %}selected{% endif %}>{{ fach.bezeichnung }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card-footer">
+                        <a href="{{ path('dashboard') }}" class="btn btn-primary btn-sm">
+                            {{ 'filter.reset'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

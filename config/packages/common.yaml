@@ -1,0 +1,18 @@
+parameters:
+  project_url: https://github.com/hggbroich/medienkonzept
+
+common:
+  app:
+    url: "%env(APP_URL)%"
+    name: "%env(APP_NAME)%"
+    version: "%version%"
+    project_url: "%project_url%"
+    logo: "%env(APP_LOGO)%"
+    small_logo: "%env(APP_SMALLLOGO)%"
+    logo_link: 'dashboard'
+  locales:
+    - de
+  menu: mainMenu
+  disable:
+    messenger: ~
+
