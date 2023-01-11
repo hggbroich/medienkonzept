@@ -15,3 +15,7 @@ lerneinheit:
 dashboard:
   jahrgangsstufe: Übersicht (nach Jgst.)
   fach: Übersicht (nach Fach)
+
+admin:
+  ea:
+    label: Datenverwaltung

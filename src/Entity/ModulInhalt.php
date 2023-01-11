@@ -42,7 +42,7 @@ class ModulInhalt {
     #[ORM\InverseJoinColumn(onDelete: 'cascade')]
     private Collection $kompetenzen;
 
-    #[ORM\OneToMany(mappedBy: 'inhalt', targetEntity: ModulInhaltMaterial::class)]
+    #[ORM\OneToMany(mappedBy: 'inhalt', targetEntity: ModulInhaltMaterial::class, cascade: ['all'], orphanRemoval: true)]
     #[ORM\InverseJoinColumn(onDelete: 'cascade')]
     private Collection $materialien;
 
@@ -135,6 +135,15 @@ class ModulInhalt {
      */
     public function getKompetenzen(): Collection {
         return $this->kompetenzen;
+    }
+
+    public function addMaterialien(ModulInhaltMaterial $material) {
+        $material->setInhalt($this);
+        $this->materialien->add($material);
+    }
+
+    public function removeMaterialien(ModulInhaltMaterial $material) {
+        $this->materialien->removeElement($material);
     }
 
     /**
