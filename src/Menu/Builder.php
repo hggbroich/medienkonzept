@@ -20,8 +20,12 @@ class Builder {
         $menu = $this->factory->createItem('root')
             ->setChildrenAttribute('class', 'navbar-nav mr-auto');
 
-        $menu->addChild('dashboard.label', [
-            'route' => 'dashboard'
+        $menu->addChild('dashboard.jahrgangsstufe', [
+            'route' => 'jgst_redirect'
+        ])
+            ->setExtra('icon', 'fa fa-home');
+        $menu->addChild('dashboard.fach', [
+            'route' => 'fach_redirect'
         ])
             ->setExtra('icon', 'fa fa-home');
 

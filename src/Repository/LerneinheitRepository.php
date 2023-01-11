@@ -8,7 +8,7 @@ use App\Entity\Lerneinheit;
 
 class LerneinheitRepository extends AbstractRepository implements LerneinheitRepositoryInterface {
 
-    public function findAllByJgstAndSubject(Jahrgangsstufe $jgst, ?Fach $fach): array {
+    public function findAllByJgstAndSubject(?Jahrgangsstufe $jgst, ?Fach $fach): array {
         $qb = $this->em->createQueryBuilder()
             ->select(['i', 'mi', 'k'])
             ->from(Lerneinheit::class, 'i')
@@ -17,10 +17,13 @@ class LerneinheitRepository extends AbstractRepository implements LerneinheitRep
             ->leftJoin('mi.modul', 'm')
             ->leftJoin('mi.kompetenzstufe', 'k')
             ->leftJoin('i.fach', 'f')
-            ->where('j.id = :jgst')
-            ->setParameter('jgst', $jgst->getId())
             ->addOrderBy('m.bezeichnung', 'asc')
             ->addOrderBy('k.sortierung', 'asc');
+
+        if($jgst !== null) {
+            $qb->andWhere('j.id = :jgst')
+                ->setParameter('jgst', $jgst->getId());
+        }
 
         if($fach !== null) {
             $qb->andWhere('f.id = :fach')

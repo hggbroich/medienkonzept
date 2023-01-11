@@ -25,10 +25,6 @@ class JahrgangsstufenFilter {
             $selected = $stufen[$selectedId];
         }
 
-        if($selected === null) {
-            $selected = reset($stufen);
-        }
-
         return new JahrgangsstufenFilterView($stufen, $selected);
     }
 }

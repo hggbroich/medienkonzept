@@ -11,3 +11,7 @@ modulinhalt:
 
 lerneinheit:
   stundenumfang: "%stunden% UStd."
+
+dashboard:
+  jahrgangsstufe: Übersicht (nach Jgst.)
+  fach: Übersicht (nach Fach)

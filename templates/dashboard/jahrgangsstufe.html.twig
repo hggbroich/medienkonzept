@@ -1,0 +1,66 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'dashboard.jahrgangsstufe'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid px-0">
+        {% set currentFilter = {
+            fach: (fachFilter.aktuellesFach is not null ? fachFilter.aktuellesFach.id : null),
+            id: jahrgangsstufe.id
+        } %}
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center border-bottom-0">
+                        <ul class="nav nav-pills card-header-pills flex-fill" data-trigger="resize-hide">
+                            {% for jgst in jahrgangsstufen %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if jahrgangsstufe.id == jgst.id %}active{% endif%}"
+                                       href="{{ path('jgst', currentFilter|merge({ id: jgst.id })) }}">
+                                        {{ jgst.bezeichnung }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                {% for group in groups %}
+                    <div class="card">
+                        <div class="card-header font-weight-bold">
+                            {{ group.fach.bezeichnung }}
+                        </div>
+
+                        {% include "dashboard/_group.html.twig" %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-3 sticky-sidebar">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-filter"></i> {{ 'filter.label'|trans }}</h5>
+
+                        <form method="get">
+                            <div class="form-group mb-0">
+                                <select name="fach" id="fach" class="form-control custom-select" data-trigger="submit">
+                                    <option value="" placeholder>{{ 'filter.fach'|trans }}</option>
+                                    {% for fach in fachFilter.faecher %}
+                                        <option value="{{ fach.id }}" {% if fachFilter.aktuellesFach is not null and fachFilter.aktuellesFach.id == fach.id %}selected{% endif %}>{{ fach.bezeichnung }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card-footer">
+                        <a href="{{ path('jgst_redirect') }}" class="btn btn-primary btn-sm">
+                            {{ 'filter.reset'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

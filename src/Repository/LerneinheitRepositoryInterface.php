@@ -9,9 +9,9 @@ use App\Entity\Lerneinheit;
 interface LerneinheitRepositoryInterface {
 
     /**
-     * @param Jahrgangsstufe $jgst
+     * @param Jahrgangsstufe|null $jgst
      * @param Fach|null $fach
-     * @return Lerneinheit[]
+     * @return Lerneinheit
      */
-    public function findAllByJgstAndSubject(Jahrgangsstufe $jgst, ?Fach $fach): array;
+    public function findAllByJgstAndSubject(?Jahrgangsstufe $jgst, ?Fach $fach): array;
 }
