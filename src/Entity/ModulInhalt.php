@@ -159,4 +159,8 @@ class ModulInhalt {
     public function getWerkzeuge(): Collection {
         return $this->werkzeuge;
     }
+
+    public function __toString(): string {
+        return $this->getZusammenfassung();
+    }
 }
