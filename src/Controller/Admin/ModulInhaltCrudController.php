@@ -24,6 +24,7 @@ class ModulInhaltCrudController extends AbstractCrudController
             AssociationField::new('kompetenzstufe'),
             TextField::new('bezeichnung'),
             TextareaField::new('zusammenfassung'),
+            AssociationField::new('lerneinheiten'),
             AssociationField::new('kompetenzen'),
             CollectionField::new('materialien')
                 ->setEntryType(ModulInhaltMaterialType::class)

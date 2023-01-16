@@ -153,4 +153,12 @@ class Lerneinheit {
         return $this->modulInhalte;
     }
 
+    public function __toString(): string {
+        if(!empty($this->fach)) {
+            return sprintf('%s (%s)', $this->getBezeichnung(), $this->getFach()->getBezeichnung());
+        }
+
+        return $this->getBezeichnung();
+    }
+
 }

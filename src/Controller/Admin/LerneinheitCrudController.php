@@ -24,7 +24,8 @@ class LerneinheitCrudController extends AbstractCrudController
             AssociationField::new('funktion'),
             TextField::new('bezeichnung'),
             IntegerField::new('stundenumfang'),
-            AssociationField::new('jahrgangsstufen')
+            AssociationField::new('jahrgangsstufen'),
+            AssociationField::new('modulInhalte')
         ];
     }
 }
