@@ -294,8 +294,8 @@ class ImportCommand extends Command {
             $kompetenz = $this->modulKompetenzstufenMap[$inhalt->ModulKompetenzID];
 
             $entity = (new ModulInhalt())
-                ->setBezeichnung($inhalt->Beschreibung)
-                ->setZusammenfassung($inhalt->Zusammenfassung)
+                ->setBezeichnung($inhalt->Zusammenfassung)
+                ->setZusammenfassung($inhalt->Beschreibung)
                 ->setModul($modul)
                 ->setKompetenzstufe($kompetenz);
 

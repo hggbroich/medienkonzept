@@ -161,6 +161,6 @@ class ModulInhalt {
     }
 
     public function __toString(): string {
-        return $this->getZusammenfassung();
+        return $this->getBezeichnung();
     }
 }
