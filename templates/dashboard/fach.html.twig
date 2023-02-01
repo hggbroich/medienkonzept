@@ -6,6 +6,8 @@
     <div class="container-fluid px-0">
         {% set currentFilter = {
             jgst: (jgstFilter.aktuelleJahrgangsstufe is not null ? jgstFilter.aktuelleJahrgangsstufe.id : null),
+            kompetenz: (kompetenzFilter.aktuelleKompetenz is not null ? kompetenzFilter.aktuelleKompetenz.id : null),
+            modul: (modulFilter.aktuellesModul is not null ? modulFilter.aktuellesModul.id : null),
             id: fach.id
         } %}
 
@@ -41,11 +43,37 @@
                         <h5 class="card-title"><i class="fas fa-filter"></i> {{ 'filter.label'|trans }}</h5>
 
                         <form method="get">
-                            <div class="form-group mb-0">
+                            <div class="form-group">
                                 <select name="jgst" id="fach" class="form-control custom-select" data-trigger="submit">
                                     <option value="" placeholder>{{ 'filter.jgst'|trans }}</option>
                                     {% for jgst in jgstFilter.jahrgangsstufen %}
                                         <option value="{{ jgst.id }}" {% if jgstFilter.aktuelleJahrgangsstufe is not null and jgstFilter.aktuelleJahrgangsstufe.id == jgst.id %}selected{% endif %}>{{ jgst.bezeichnung }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <select name="kompetenz" id="kompetenz" class="form-control custom-select" data-trigger="submit">
+                                    <option value="" placeholder>{{ 'filter.kompetenz'|trans }}</option>
+                                    {% for group in kompetenzFilter.kompetenzen %}
+                                        <optgroup label="{{ group.kompetenzBereich.bezeichnung }}">
+                                            {% for kompetenz in group.kompetenzen %}
+                                                <option value="{{ kompetenz.id }}" {% if kompetenzFilter.aktuelleKompetenz is not null and kompetenzFilter.aktuelleKompetenz.id == kompetenz.id %}selected{% endif %}>
+                                                    {{ kompetenz.bezeichnung }}
+                                                </option>
+                                            {% endfor %}
+                                        </optgroup>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <select name="modul" id="modul" class="form-control custom-select" data-trigger="submit">
+                                    <option value="" placeholder>{{ 'filter.modul'|trans }}</option>
+                                    {% for modul in modulFilter.module %}
+                                        <option value="{{ modul.id }}" {% if modulFilter.aktuellesModul is not null and modulFilter.aktuellesModul.id == modul.id %}selected{% endif %}>
+                                            {{ modul.bezeichnung }}
+                                        </option>
                                     {% endfor %}
                                 </select>
                             </div>

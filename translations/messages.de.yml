@@ -3,6 +3,8 @@ filter:
   reset: Filter zurücksetzen
   jgst: Jahrgangsstufe filtern
   fach: Fach filtern
+  kompetenz: Kompetenz filtern
+  modul: Modul filtern
 
 modulinhalt:
   kompetenzen: Kompetenzen
