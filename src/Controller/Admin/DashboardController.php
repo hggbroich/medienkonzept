@@ -39,20 +39,26 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::section('Stammdaten');
         yield MenuItem::linkToCrud('Fach', '', Fach::class);
         yield MenuItem::linkToCrud('Jahrgang', '', Jahrgang::class);
         yield MenuItem::linkToCrud('Jahrgangsstufe', '', Jahrgangsstufe::class);
-        yield MenuItem::linkToCrud('Lerneinheit', '', Lerneinheit::class);
+        yield MenuItem::section('Lerneinheit');
+        yield MenuItem::linkToCrud('Lerneinheit', '', Lerneinheit::class)->setCssClass('fw-bold');
         yield MenuItem::linkToCrud('LerneinheitArt', '', LerneinheitArt::class);
         yield MenuItem::linkToCrud('LerneinheitFunktion', '', LerneinheitFunktion::class);
+        yield MenuItem::section('Material');
         yield MenuItem::linkToCrud('Material', '', Material::class);
         yield MenuItem::linkToCrud('MaterialArt', '', MaterialArt::class);
         yield MenuItem::linkToCrud('MaterialVerfuegbarkeit', '', MaterialVerfuegbarkeit::class);
+        yield MenuItem::section('Kompetenzen');
         yield MenuItem::linkToCrud('Kompetenz', '', Kompetenz::class);
         yield MenuItem::linkToCrud('Kompetenzbereich', '', Kompetenzbereich::class);
+        yield MenuItem::section('Modul');
         yield MenuItem::linkToCrud('Modul', '', Modul::class);
-        yield MenuItem::linkToCrud('ModulInhalt', '', ModulInhalt::class);
+        yield MenuItem::linkToCrud('ModulInhalt', '', ModulInhalt::class)->setCssClass('fw-bold');
         yield MenuItem::linkToCrud('ModulKompetenzstufe', '', ModulKompetenzstufe::class);
+        yield MenuItem::section('Werkzeug');
         yield MenuItem::linkToCrud('Werkzeug', '', Werkzeug::class);
     }
 }
