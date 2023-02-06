@@ -3,25 +3,29 @@
         {% for inhalt in lerneinheit.modulInhalte %}
             <div class="list-group-item">
                 <div class="mb-2">
-                                            <span class="badge badge-primary">
-                                                {{ inhalt.modul.bezeichnung }}
-                                            </span>
+                    <span class="badge badge-primary">
+                        {{ lerneinheit.art.bezeichnung }}
+                    </span>
 
                     <span class="badge badge-primary">
-                                                {{ lerneinheit.bezeichnung }}
-                                            </span>
+                        {{ inhalt.modul.bezeichnung }}
+                    </span>
+
+                    <span class="badge badge-primary">
+                        {{ lerneinheit.bezeichnung }}
+                    </span>
 
                     <span class="badge badge-secondary">
-                                                {{ inhalt.kompetenzstufe.bezeichnung }}
-                                            </span>
+                        {{ inhalt.kompetenzstufe.bezeichnung }}
+                    </span>
 
                     <span class="badge badge-secondary">
-                                                {{ lerneinheit.funktion.bezeichnung }}
-                                            </span>
+                        {{ lerneinheit.funktion.bezeichnung }}
+                    </span>
 
                     <span class="badge badge-secondary">
-                                                {{ 'lerneinheit.stundenumfang'|trans({'%stunden%': lerneinheit.stundenumfang}) }}
-                                            </span>
+                        {{ 'lerneinheit.stundenumfang'|trans({'%stunden%': lerneinheit.stundenumfang}) }}
+                    </span>
                 </div>
 
                 <h6 class="card-title">{{ inhalt.bezeichnung }}</h6>

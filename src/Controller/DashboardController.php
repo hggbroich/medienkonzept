@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Fach;
 use App\Entity\Jahrgangsstufe;
 use App\Entity\Lerneinheit;
+use App\Entity\LerneinheitArt;
+use App\Entity\LerneinheitFunktion;
 use App\Grouping\FachLerneinheitenGrouping;
 use App\Grouping\Grouper;
 use App\Grouping\JahrgangsstufeLerneinheitenGroup;
@@ -18,6 +20,8 @@ use App\Sorting\Sorter;
 use App\View\Filter\FachFilter;
 use App\View\Filter\JahrgangsstufenFilter;
 use App\View\Filter\KompetenzFilter;
+use App\View\Filter\LerneinheitArtFilter;
+use App\View\Filter\LerneinheitFunktionFilter;
 use App\View\Filter\ModulFilter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +35,7 @@ class DashboardController extends AbstractController {
 
     #[Route('')]
     #[Route('/', name: 'dashboard')]
-    #[Route('//jahrgangsstufe', name: 'jgst_redirect')]
+    #[Route('/jahrgangsstufe', name: 'jgst_redirect')]
     public function index(JahrgangsstufeRepositoryInterface $jahrgangsstufeRepository) {
         $jgst = $jahrgangsstufeRepository->findAll();
         if(count($jgst) === 0) {
@@ -46,11 +50,17 @@ class DashboardController extends AbstractController {
 
     #[Route('/jahrgangsstufe/{id}', name: 'jgst')]
     public function jgst(Request $request, Jahrgangsstufe $jgst, JahrgangsstufeRepositoryInterface $jahrgangsstufeRepository,
-                         FachFilter $fachFilter, KompetenzFilter $kompetenzFilter, ModulFilter $modulFilter) {
+                         FachFilter $fachFilter, KompetenzFilter $kompetenzFilter, ModulFilter $modulFilter,
+                         LerneinheitFunktionFilter $funktionFilter, LerneinheitArtFilter $artFilter) {
         $fachFilterView = $fachFilter->handleRequest($request);
         $kompetenzFilterView = $kompetenzFilter->handle($request);
         $modulFilterView = $modulFilter->handle($request);
+        $funktionFilterView = $funktionFilter->handleRequest($request);
+        $artFilterView = $artFilter->handleRequest($request);
+
         $module = $this->repository->findAllByJgstAndSubject($jgst, $fachFilterView->getAktuellesFach(), $kompetenzFilterView->getAktuelleKompetenz(), $modulFilterView->getAktuellesModul());
+        $module = $this->filterFunktion($module, $funktionFilterView->getAktuelleFunktion());
+        $module = $this->filterArt($module, $artFilterView->getAktuelleArt());
 
         $groups = $this->grouper->group($module, FachLerneinheitenGrouping::class);
         $this->sorter->sort($groups, FachLerneinheitenGroupStrategy::class);
@@ -61,6 +71,8 @@ class DashboardController extends AbstractController {
             'fachFilter' => $fachFilterView,
             'kompetenzFilter' => $kompetenzFilterView,
             'modulFilter' => $modulFilterView,
+            'funktionFilter' => $funktionFilterView,
+            'artFilter' => $artFilterView,
             'groups' => $groups
         ]);
     }
@@ -80,12 +92,17 @@ class DashboardController extends AbstractController {
 
     #[Route('/fach/{id}', 'fach')]
     public function fach(Request $request, Fach $fach, FachRepositoryInterface $fachRepository,
-                         JahrgangsstufenFilter $jgstFilter, KompetenzFilter $kompetenzFilter, ModulFilter $modulFilter) {
+                         JahrgangsstufenFilter $jgstFilter, KompetenzFilter $kompetenzFilter, ModulFilter $modulFilter,
+                         LerneinheitFunktionFilter $funktionFilter, LerneinheitArtFilter $artFilter) {
         $jgstFilterView = $jgstFilter->handleRequest($request);
         $kompetenzFilterView = $kompetenzFilter->handle($request);
         $modulFilterView = $modulFilter->handle($request);
+        $funktionFilterView = $funktionFilter->handleRequest($request);
+        $artFilterView = $artFilter->handleRequest($request);
 
         $module = $this->repository->findAllByJgstAndSubject($jgstFilterView->getAktuelleJahrgangsstufe(), $fach, $kompetenzFilterView->getAktuelleKompetenz(), $modulFilterView->getAktuellesModul());
+        $module = $this->filterFunktion($module, $funktionFilterView->getAktuelleFunktion());
+        $module = $this->filterArt($module, $artFilterView->getAktuelleArt());
 
         $groups = $this->grouper->group($module, JahrgangsstufeLerneinheitenGrouping::class);
         $this->sorter->sort($groups, JahrgangsstufeLerneinheitenGroupStrategy::class);
@@ -100,8 +117,33 @@ class DashboardController extends AbstractController {
             'jgstFilter' => $jgstFilterView,
             'kompetenzFilter' => $kompetenzFilterView,
             'modulFilter' => $modulFilterView,
+            'funktionFilter' => $funktionFilterView,
+            'artFilter' => $artFilterView,
             'groups' => $groups
         ]);
     }
 
+    /**
+     * @param Lerneinheit[] $lerneinheiten
+     * @param LerneinheitFunktion|null $funktion
+     * @return Lerneinheit[]
+     */
+    private function filterFunktion(array $lerneinheiten, ?LerneinheitFunktion $funktion): array {
+        return array_filter(
+            $lerneinheiten,
+            fn(Lerneinheit $lerneinheit) => $funktion === null || $funktion->getId() === $lerneinheit->getFunktion()->getId()
+        );
+    }
+
+    /**
+     * @param Lerneinheit[] $lerneinheiten
+     * @param LerneinheitArt|null $art
+     * @return Lerneinheit[]
+     */
+    private function filterArt(array $lerneinheiten, ?LerneinheitArt $art): array {
+        return array_filter(
+            $lerneinheiten,
+            fn(Lerneinheit $lerneinheit) => $art === null || $art->getId() === $lerneinheit->getArt()->getId()
+        );
+    }
 }

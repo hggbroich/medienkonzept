@@ -5,6 +5,8 @@ filter:
   fach: Fach filtern
   kompetenz: Kompetenz filtern
   modul: Modul filtern
+  funktion: Funktion filtern
+  art: Art filtern
 
 modulinhalt:
   kompetenzen: Kompetenzen

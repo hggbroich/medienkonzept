@@ -15,7 +15,7 @@ interface LerneinheitRepositoryInterface {
      * @param Fach|null $fach
      * @param Kompetenz|null $kompetenz
      * @param Modul|null $modul
-     * @return array
+     * @return Lerneinheit[]
      */
     public function findAllByJgstAndSubject(?Jahrgangsstufe $jgst, ?Fach $fach, ?Kompetenz $kompetenz = null, ?Modul $modul = null): array;
 }
