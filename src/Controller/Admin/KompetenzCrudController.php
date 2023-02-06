@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Kompetenz;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -16,6 +17,10 @@ class KompetenzCrudController extends AbstractCrudController
         return Kompetenz::class;
     }
 
+    public function configureFilters(Filters $filters): Filters {
+        return $filters
+            ->add('kompetenzbereich');
+    }
 
     public function configureFields(string $pageName): iterable
     {
