@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Lerneinheit;
+use App\Entity\ModulInhalt;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -24,8 +25,7 @@ class LerneinheitCrudController extends AbstractCrudController
             AssociationField::new('funktion'),
             TextField::new('bezeichnung'),
             IntegerField::new('stundenumfang'),
-            AssociationField::new('jahrgangsstufen'),
-            AssociationField::new('modulInhalte')
+            AssociationField::new('jahrgangsstufen')
         ];
     }
 }
