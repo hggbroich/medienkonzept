@@ -2,14 +2,21 @@
 
 namespace App\Security\User;
 
+use JsonException;
 use LightSaml\ClaimTypes;
 use LightSaml\Model\Protocol\Response;
 use LightSaml\SpBundle\Security\User\AttributeMapperInterface;
 use SchulIT\CommonBundle\Saml\ClaimTypes as SamlClaimTypes;
 use SchulIT\CommonBundle\Security\User\AbstractUserMapper;
+use stdClass;
 
 class AttributeMapper extends AbstractUserMapper implements AttributeMapperInterface {
 
+    /**
+     * @param Response $response
+     * @return array<string, mixed>
+     * @throws JsonException
+     */
     public function getAttributes(Response $response): array {
         $attributes = [ ];
 
@@ -31,20 +38,20 @@ class AttributeMapper extends AbstractUserMapper implements AttributeMapperInter
         return $attributes;
     }
 
+    /**
+     * @return array<stdClass>
+     * @throws JsonException
+     */
     private function getServices(Response $response): array {
-        $values = $this->getValues($response, SamlClaimTypes::SERVICES);
+        $values = $response->getFirstAssertion()->getFirstAttributeStatement()
+            ->getFirstAttributeByName(SamlClaimTypes::SERVICES)->getAllAttributeValues();
 
         $services = [ ];
 
         foreach($values as $value) {
-            $services[] = json_decode($value, null, 512, JSON_THROW_ON_ERROR);
+            $services[] = json_decode($value, associative: null);
         }
 
         return $services;
-    }
-
-    private function getValues(Response $response, $attributeName) {
-        return $response->getFirstAssertion()->getFirstAttributeStatement()
-            ->getFirstAttributeByName($attributeName)->getAllAttributeValues();
     }
 }

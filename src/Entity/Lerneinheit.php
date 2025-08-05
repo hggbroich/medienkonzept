@@ -35,14 +35,15 @@ class Lerneinheit {
     #[Assert\GreaterThan(0)]
     private int $stundenumfang = 0;
 
+    /** @var Collection<int, Jahrgangsstufe> $jahrgangsstufen */
     #[ORM\ManyToMany(targetEntity: Jahrgangsstufe::class)]
     #[ORM\JoinTable]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     #[ORM\InverseJoinColumn(onDelete: 'cascade')]
     #[Assert\Count(min: 1)]
-    /** @var Collection<Jahrgangsstufe> $jahrgangsstufen */
     private Collection $jahrgangsstufen;
 
+    /** @var Collection<int, ModulInhalt> $modulInhalte */
     #[ORM\ManyToMany(targetEntity: ModulInhalt::class, mappedBy: 'lerneinheiten')]
     private Collection $modulInhalte;
 
@@ -132,7 +133,7 @@ class Lerneinheit {
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, Jahrgangsstufe>
      */
     public function getJahrgangsstufen(): Collection {
         return $this->jahrgangsstufen;
@@ -147,7 +148,7 @@ class Lerneinheit {
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, ModulInhalt>
      */
     public function getModulInhalte(): Collection {
         return $this->modulInhalte;

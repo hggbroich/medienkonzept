@@ -5,6 +5,10 @@ namespace App\Grouping;
 use App\Entity\Kompetenz;
 use App\Entity\Kompetenzbereich;
 
+/**
+ * @implements GroupInterface<Kompetenzbereich, Kompetenz>
+ * @implements SortableGroupInterface<Kompetenz>
+ */
 class KompetenzKompetenzbereichGroup implements GroupInterface, SortableGroupInterface {
 
     /** @var Kompetenz[] */
@@ -22,17 +26,17 @@ class KompetenzKompetenzbereichGroup implements GroupInterface, SortableGroupInt
     }
 
     /**
-     * @return array
+     * @return Kompetenz[]
      */
     public function getKompetenzen(): array {
         return $this->kompetenzen;
     }
 
-    public function getKey() {
+    public function getKey(): mixed {
         return $this->kompetenzbereich;
     }
 
-    public function addItem($item) {
+    public function addItem($item): void {
         $this->kompetenzen[] = $item;
     }
 

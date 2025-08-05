@@ -2,9 +2,20 @@
 
 namespace App\Grouping;
 
+/**
+ * @template K
+ * @template V
+ */
 interface GroupInterface {
 
-    public function getKey();
+    /**
+     * @return K
+     */
+    public function getKey(): mixed;
 
-    public function addItem($item);
+    /**
+     * @param V $item
+     * @return void
+     */
+    public function addItem($item): void;
 }

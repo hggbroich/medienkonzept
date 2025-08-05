@@ -47,8 +47,8 @@
                         <h5 class="card-title"><i class="fas fa-filter"></i> {{ 'filter.label'|trans }}</h5>
 
                         <form method="get">
-                            <div class="form-group">
-                                <select name="fach" id="fach" class="form-control custom-select" data-trigger="submit">
+                            <div class="form-group mb-2">
+                                <select name="fach" id="fach" class="form-select" data-trigger="submit">
                                     <option value="" placeholder>{{ 'filter.fach'|trans }}</option>
                                     {% for fach in fachFilter.faecher %}
                                         <option value="{{ fach.id }}" {% if fachFilter.aktuellesFach is not null and fachFilter.aktuellesFach.id == fach.id %}selected{% endif %}>{{ fach.bezeichnung }}</option>
@@ -56,8 +56,8 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <select name="kompetenz" id="kompetenz" class="form-control custom-select" data-trigger="submit">
+                            <div class="form-group mb-2">
+                                <select name="kompetenz" id="kompetenz" class="form-select" data-trigger="submit">
                                     <option value="" placeholder>{{ 'filter.kompetenz'|trans }}</option>
                                     {% for group in kompetenzFilter.kompetenzen %}
                                         <optgroup label="{{ group.kompetenzBereich.bezeichnung }}">
@@ -71,8 +71,8 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <select name="modul" id="modul" class="form-control custom-select" data-trigger="submit">
+                            <div class="form-group mb-2">
+                                <select name="modul" id="modul" class="form-select" data-trigger="submit">
                                     <option value="" placeholder>{{ 'filter.modul'|trans }}</option>
                                     {% for modul in modulFilter.module %}
                                         <option value="{{ modul.id }}" {% if modulFilter.aktuellesModul is not null and modulFilter.aktuellesModul.id == modul.id %}selected{% endif %}>
@@ -82,8 +82,8 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <select name="funktion" id="funktion" class="form-control custom-select" data-trigger="submit">
+                            <div class="form-group mb-2">
+                                <select name="funktion" id="funktion" class="form-select" data-trigger="submit">
                                     <option value="" placeholder>{{ 'filter.funktion'|trans }}</option>
                                     {% for funktion in funktionFilter.funktionen %}
                                         <option value="{{ funktion.id }}" {% if funktionFilter.aktuelleFunktion is not null and funktionFilter.aktuelleFunktion.id == funktion.id %}selected{% endif %}>{{ funktion.bezeichnung }}</option>
@@ -91,8 +91,8 @@
                                 </select>
                             </div>
 
-                            <div class="form-group mb-0">
-                                <select name="art" id="art" class="form-control custom-select" data-trigger="submit">
+                            <div class="form-group mb-2 mb-0">
+                                <select name="art" id="art" class="form-select" data-trigger="submit">
                                     <option value="" placeholder>{{ 'filter.art'|trans }}</option>
                                     {% for art in artFilter.arten %}
                                         <option value="{{ art.id }}" {% if artFilter.aktuelleArt is not null and artFilter.aktuelleArt.id == art.id %}selected{% endif %}>{{ art.bezeichnung }}</option>

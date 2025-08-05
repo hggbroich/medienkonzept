@@ -3,27 +3,27 @@
         {% for inhalt in lerneinheit.modulInhalte %}
             <div class="list-group-item">
                 <div class="mb-2">
-                    <span class="badge badge-primary">
+                    <span class="badge text-bg-primary">
                         {{ lerneinheit.art.bezeichnung }}
                     </span>
 
-                    <span class="badge badge-primary">
+                    <span class="badge text-bg-primary">
                         {{ inhalt.modul.bezeichnung }}
                     </span>
 
-                    <span class="badge badge-primary">
+                    <span class="badge text-bg-primary">
                         {{ lerneinheit.bezeichnung }}
                     </span>
 
-                    <span class="badge badge-secondary">
+                    <span class="badge text-bg-secondary">
                         {{ inhalt.kompetenzstufe.bezeichnung }}
                     </span>
 
-                    <span class="badge badge-secondary">
+                    <span class="badge text-bg-secondary">
                         {{ lerneinheit.funktion.bezeichnung }}
                     </span>
 
-                    <span class="badge badge-secondary">
+                    <span class="badge text-bg-secondary">
                         {{ 'lerneinheit.stundenumfang'|trans({'%stunden%': lerneinheit.stundenumfang}) }}
                     </span>
                 </div>
@@ -37,7 +37,7 @@
                         <div class="col-md-4">
                             {% for werkzeug in inhalt.werkzeuge %}
                                 <div class="d-flex flex-row">
-                                    <div class="mr-1">
+                                    <div class="me-1">
                                         <i class="fas fa-tools"></i>
                                     </div>
                                     <div>
@@ -54,7 +54,7 @@
                         <div class="col-md-4">
                             {% for material in inhalt.materialien %}
                                 <div class="d-flex flex-row">
-                                    <div class="mr-1">
+                                    <div class="me-1">
                                         <i class="fas fa-book"></i>
                                     </div>
 
@@ -72,7 +72,7 @@
                         <div class="col-md-4">
                             {% for kompetenz in inhalt.kompetenzen %}
                                 <div class="d-flex flex-row">
-                                    <div class="mr-1">
+                                    <div class="me-1">
                                         <i class="fas fa-tag"></i>
                                     </div>
                                     <div title="{{ kompetenz.beschreibung }}">

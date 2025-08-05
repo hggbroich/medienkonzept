@@ -2,26 +2,35 @@
 
 namespace App\Grouping;
 
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+/**
+ * @template K
+ * @template V
+ * @template-covariant G of GroupInterface<K, V>
+ */
+#[AutoconfigureTag('app.grouping_strategy')]
 interface GroupingStrategyInterface {
 
     /**
-     * @param mixed $object
-     * @return mixed
+     * @param V $object
+     * @param array<string, mixed> $options
+     * @return K|K[]
      */
-    public function computeKey($object, array $options = [ ]);
+    public function computeKey(mixed $object, array $options = [ ]): mixed;
 
     /**
-     * @param mixed $keyA
-     * @param mixed $keyB
-     * @param array $options
+     * @param V $keyA
+     * @param V $keyB
+     * @param array<string, mixed> $options
      * @return bool
      */
-    public function areEqualKeys($keyA, $keyB, array $options = [ ]): bool;
+    public function areEqualKeys(mixed $keyA, mixed $keyB, array $options = [ ]): bool;
 
     /**
-     * @param mixed $key
-     * @param array $options
-     * @return GroupInterface
+     * @param K $key
+     * @param array<string, mixed> $options
+     * @return G
      */
-    public function createGroup($key, array $options = [ ]): GroupInterface;
+    public function createGroup(mixed $key, array $options = [ ]): GroupInterface;
 }

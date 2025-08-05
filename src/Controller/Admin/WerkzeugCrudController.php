@@ -6,6 +6,9 @@ use App\Entity\Werkzeug;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<Werkzeug>
+ */
 class WerkzeugCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

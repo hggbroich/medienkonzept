@@ -4,9 +4,12 @@ namespace App\Sorting;
 
 use App\Grouping\KompetenzKompetenzbereichGroup;
 
-class KompetenzKompetenzbereichGroupStrategy implements SortingStrategyInterface {
+/**
+ * @implements SortingStrategyInterface<KompetenzKompetenzbereichGroup>
+ */
+readonly class KompetenzKompetenzbereichGroupStrategy implements SortingStrategyInterface {
 
-    public function __construct(private readonly NumberStrategy $strategy) { }
+    public function __construct(private NumberStrategy $strategy) { }
 
     /**
      * @param KompetenzKompetenzbereichGroup $objectA

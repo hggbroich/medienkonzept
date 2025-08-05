@@ -8,13 +8,13 @@ use LightSaml\SpBundle\Security\Http\Authenticator\SamlToken;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-class UserUpdater implements EventSubscriberInterface {
+readonly class UserUpdater implements EventSubscriberInterface {
 
-    public function __construct(private readonly UserMapper $userMapper, private readonly EntityManagerInterface $em)
+    public function __construct(private UserMapper $userMapper, private EntityManagerInterface $em)
     {
     }
 
-    public function onLoginSuccess(LoginSuccessEvent $event) {
+    public function onLoginSuccess(LoginSuccessEvent $event): void {
         $user = $event->getUser();
         $token = $event->getAuthenticatedToken();
 

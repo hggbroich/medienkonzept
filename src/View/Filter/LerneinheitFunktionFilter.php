@@ -15,7 +15,7 @@ class LerneinheitFunktionFilter {
     public function handleRequest(Request $request): LerneinheitFunktionFilterView {
         $funktionen = ArrayUtils::createArrayWithKeys(
             $this->repository->findAll(),
-            fn(LerneinheitFunktion $funktion) => $funktion->getId()
+            fn(LerneinheitFunktion $funktion) => (int)$funktion->getId()
         );
 
         $selectedId = $request->query->getInt('funktion');

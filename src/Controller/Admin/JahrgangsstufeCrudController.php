@@ -8,6 +8,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<Jahrgangsstufe>
+ */
 class JahrgangsstufeCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

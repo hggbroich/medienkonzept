@@ -30,22 +30,26 @@ class ModulInhalt {
     #[Assert\NotBlank]
     private ?string $zusammenfassung;
 
+    /** @var Collection<int, Lerneinheit> */
     #[ORM\ManyToMany(targetEntity: Lerneinheit::class, inversedBy: 'modulInhalte')]
     #[ORM\JoinTable]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     #[ORM\InverseJoinColumn(onDelete: 'cascade')]
     private Collection $lerneinheiten;
 
+    /** @var Collection<int, Kompetenz> */
     #[ORM\ManyToMany(targetEntity: Kompetenz::class)]
     #[ORM\JoinTable]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     #[ORM\InverseJoinColumn(onDelete: 'cascade')]
     private Collection $kompetenzen;
 
-    #[ORM\OneToMany(mappedBy: 'inhalt', targetEntity: ModulInhaltMaterial::class, cascade: ['all'], orphanRemoval: true)]
+    /** @var Collection<int, ModulInhaltMaterial> */
+    #[ORM\OneToMany(targetEntity: ModulInhaltMaterial::class, mappedBy: 'inhalt', cascade: ['all'], orphanRemoval: true)]
     #[ORM\InverseJoinColumn(onDelete: 'cascade')]
     private Collection $materialien;
 
+    /** @var Collection<int, Werkzeug> */
     #[ORM\ManyToMany(targetEntity: Werkzeug::class)]
     #[ORM\JoinTable]
     #[ORM\JoinColumn(onDelete: 'cascade')]
@@ -124,37 +128,37 @@ class ModulInhalt {
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, Lerneinheit>
      */
     public function getLerneinheiten(): Collection {
         return $this->lerneinheiten;
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, Kompetenz>
      */
     public function getKompetenzen(): Collection {
         return $this->kompetenzen;
     }
 
-    public function addMaterialien(ModulInhaltMaterial $material) {
+    public function addMaterialien(ModulInhaltMaterial $material): void {
         $material->setInhalt($this);
         $this->materialien->add($material);
     }
 
-    public function removeMaterialien(ModulInhaltMaterial $material) {
+    public function removeMaterialien(ModulInhaltMaterial $material): void {
         $this->materialien->removeElement($material);
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, ModulInhaltMaterial>
      */
     public function getMaterialien(): Collection {
         return $this->materialien;
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, Werkzeug>
      */
     public function getWerkzeuge(): Collection {
         return $this->werkzeuge;

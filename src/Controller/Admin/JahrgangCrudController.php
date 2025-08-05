@@ -6,6 +6,9 @@ use App\Entity\Jahrgang;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<Jahrgang>
+ */
 class JahrgangCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

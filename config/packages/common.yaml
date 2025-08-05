@@ -13,6 +13,10 @@ common:
   locales:
     - de
   menu: mainMenu
-  disable:
-    messenger: ~
 
+services:
+  SchulIT\CommonBundle\Monolog\DatabaseHandler:
+    autoconfigure: true
+    autowire: true
+    arguments:
+      $connection: '@doctrine.dbal.logger_connection'

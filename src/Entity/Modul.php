@@ -16,7 +16,8 @@ class Modul {
     #[Assert\NotBlank]
     private ?string $bezeichnung;
 
-    #[ORM\OneToMany(mappedBy: 'modul', targetEntity: ModulInhalt::class)]
+    /** @var Collection<int, ModulInhalt> $inhalte */
+    #[ORM\OneToMany(targetEntity: ModulInhalt::class, mappedBy: 'modul')]
     private Collection $inhalte;
 
     public function __construct() {
@@ -40,7 +41,7 @@ class Modul {
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, ModulInhalt>
      */
     public function getInhalte(): Collection {
         return $this->inhalte;

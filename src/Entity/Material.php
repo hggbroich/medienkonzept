@@ -12,19 +12,19 @@ class Material {
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
-    private ?string $bezeichnung;
+    private ?string $bezeichnung = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Assert\NotBlank]
-    private ?string $quelle;
+    private ?string $quelle = null;
 
     #[ORM\ManyToOne(targetEntity: MaterialArt::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    private ?MaterialArt $art;
+    private ?MaterialArt $art = null;
 
     #[ORM\ManyToOne(targetEntity: MaterialVerfuegbarkeit::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    private ?MaterialVerfuegbarkeit $verfuegbarkeit;
+    private ?MaterialVerfuegbarkeit $verfuegbarkeit = null;
 
     /**
      * @return string|null

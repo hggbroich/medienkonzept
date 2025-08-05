@@ -19,41 +19,45 @@ use App\Entity\ModulInhaltMaterial;
 use App\Entity\ModulKompetenzstufe;
 use App\Entity\Werkzeug;
 use Doctrine\ORM\EntityManagerInterface;
+use stdClass;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Attribute\Option;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand('app:import', description: 'Import Daten aus einer vorhanden MDB (schulintern zum Import)')]
-class ImportCommand extends Command {
+class ImportCommand {
 
+    /** @var array<int, Fach> */
     private array $faecherMap = [ ];
+    /** @var array<int, Jahrgangsstufe> */
     private array $jahrgangsstufenMap = [ ];
+    /** @var array<int, Kompetenzbereich> */
     private array $kompetenzBereichMap = [ ];
+    /** @var array<int, Kompetenz> */
     private array $kompetenzMap = [ ];
-
+    /** @var array<int, LerneinheitArt> */
     private array $lerneinheitArtenMap = [ ];
+    /** @var array<int, LerneinheitFunktion> */
     private array $lerneinheitFunktionenMap = [ ];
+    /** @var array<int, Lerneinheit> */
     private array $lerneinheitenMap = [ ];
+    /** @var array<int, Material> */
     private array $materialMap = [ ];
+    /** @var array<int, Werkzeug> */
     private array $werkzeugeMap = [ ];
+    /** @var array<int, Modul> */
     private array $moduleMap = [ ];
+    /** @var array<int, ModulKompetenzstufe> */
     private array $modulKompetenzstufenMap = [ ];
+    /** @var array<int, ModulInhalt> */
     private array $modulInhalteMap = [ ];
 
+    public function __construct(private readonly EntityManagerInterface $em) { }
 
-    public function __construct(private readonly EntityManagerInterface $em, string $name = null) {
-        parent::__construct($name);
-    }
-
-    public function configure() {
-        $this->addOption('path',  'p', InputOption::VALUE_REQUIRED,'Pfad zum Ordner mit den JSON-Dateien aus der Access DB');
-    }
-
-    public function execute(InputInterface $input, OutputInterface $output): int {
-        $path = $input->getOption('path');
-
+    public function __invoke(#[Option(description: 'Pfad zum Ordner mit den JSON-Dateien aus der Access DB', name: 'path', shortcut: 'p')] string $path): int {
         $this->importFaecher($path);
         $this->importJahrgaenge($path);
         $this->importKompetenzbereiche($path);
@@ -72,7 +76,7 @@ class ImportCommand extends Command {
         $this->importModulinhalteMaterialien($path);
         $this->importModulinhalteWerkzeuge($path);
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function importFaecher(string $path): void {
@@ -389,6 +393,11 @@ class ImportCommand extends Command {
         $this->em->flush();
     }
 
+    /**
+     * @param string $path
+     * @param string $filename
+     * @return iterable<stdClass>
+     */
     private function getJsonLines(string $path, string $filename): iterable {
         $handle = fopen($path . DIRECTORY_SEPARATOR . $filename, 'r');
 

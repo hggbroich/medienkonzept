@@ -4,16 +4,29 @@ namespace App\Utils;
 
 use InvalidArgumentException;
 use Closure;
+use Stringable;
 
 class ArrayUtils {
 
+    /**
+     * @template T
+     * @param iterable<T> $items
+     * @param Closure(T): void $closure
+     * @return void
+     */
     public static function apply(iterable &$items, Closure $closure): void {
         foreach($items as $item) {
             $closure($item);
         }
     }
 
-    public static function first(iterable $items, Closure $predicate) {
+    /**
+     * @template T
+     * @param iterable<T> $items
+     * @param Closure(T): bool $predicate
+     * @return T|null
+     */
+    public static function first(iterable $items, Closure $predicate): mixed {
         foreach($items as $item) {
             if($predicate($item) === true) {
                 return $item;
@@ -23,7 +36,13 @@ class ArrayUtils {
         return null;
     }
 
-    public static function createArray(array $keys, array $values) {
+    /**
+     * @template T
+     * @param array-key[] $keys
+     * @param T[] $values
+     * @return array<array-key, T>
+     */
+    public static function createArray(array $keys, array $values): array {
         $array = [ ];
         $count = count($keys);
 
@@ -41,6 +60,14 @@ class ArrayUtils {
         return $array;
     }
 
+    /**
+     * @template T
+     * @template R of array-key|array-key[]
+     * @param T[] $items
+     * @param Closure(T): R $keyFunc
+     * @param bool $multiValue
+     * @return array<R, T>|array<R, T[]>
+     */
     public static function createArrayWithKeys(iterable $items, Closure $keyFunc, bool $multiValue = false): array {
         $array = [ ];
 
@@ -67,6 +94,14 @@ class ArrayUtils {
         return $array;
     }
 
+    /**
+     * @template T
+     * @template R of array-key
+     * @param T[] $items
+     * @param Closure(T): R $keyFunc
+     * @param Closure(T): mixed $valueFunc
+     * @return array<R, mixed>
+     */
     public static function createArrayWithKeysAndValues(iterable $items, Closure $keyFunc, Closure $valueFunc): array {
         $array = [ ];
 
@@ -77,6 +112,13 @@ class ArrayUtils {
         return $array;
     }
 
+    /**
+     * @template T
+     * @template K of array-key
+     * @param array<K, T> $items
+     * @param K[] $keys
+     * @return T[]
+     */
     public static function findAllWithKeys(iterable $items, array $keys): array {
         $result = [ ];
 
@@ -92,7 +134,11 @@ class ArrayUtils {
     /**
      * Returns all items of an array of object which are the same type as given.
      *
-     * @param array $items
+     * @template T of object
+     * @template R of T
+     * @param iterable<T> $items
+     * @param class-string<R> $type
+     * @return R[]
      */
     public static function filterByType(iterable $items, string $type): array {
         $result = [ ];
@@ -106,7 +152,12 @@ class ArrayUtils {
         return $result;
     }
 
-    public static function unique(iterable $items) {
+    /**
+     * @template T
+     * @param T[] $items
+     * @return T[]
+     */
+    public static function unique(iterable $items): array {
         $result = [ ];
 
         foreach($items as $item) {
@@ -118,6 +169,11 @@ class ArrayUtils {
         return $result;
     }
 
+    /**
+     * @template T
+     * @param iterable<T> $items
+     * @return T[]
+     */
     public static function iterableToArray(iterable $items): array {
         $array = [ ];
 
@@ -128,7 +184,13 @@ class ArrayUtils {
         return $array;
     }
 
-    public static function areEqual(iterable $iterableA, iterable $iterableB) {
+    /**
+     * @template T
+     * @param iterable<T> $iterableA
+     * @param iterable<T> $iterableB
+     * @return bool
+     */
+    public static function areEqual(iterable $iterableA, iterable $iterableB): bool {
         $arrayA = self::iterableToArray($iterableA);
         $arrayB = self::iterableToArray($iterableB);
 
@@ -141,6 +203,11 @@ class ArrayUtils {
 
     /**
      * Like array_intersect but compares using the === operator (and is thus capable of intersecting arrays of objects).
+     *
+     * @template T
+     * @param iterable<T> $iterableA
+     * @param iterable<T> $iterableB
+     * @return T[]
      */
     public static function intersect(iterable $iterableA, iterable $iterableB): array {
         return array_uintersect(
@@ -151,6 +218,8 @@ class ArrayUtils {
     }
 
     /**
+     * @template T of Stringable
+     * @param iterable<T> $items
      * @return string[]
      */
     public static function toString(iterable $items): array {
@@ -163,11 +232,23 @@ class ArrayUtils {
         return $result;
     }
 
+    /**
+     * @template T
+     * @param mixed $needle
+     * @param T[] $haystack
+     * @return bool
+     */
     public static function inArray(mixed $needle, iterable $haystack): bool {
         return in_array($needle, self::iterableToArray($haystack), true);
     }
 
-    public static function remove(iterable $original, iterable $remove) {
+    /**
+     * @template T
+     * @param iterable<T> $original
+     * @param iterable<T> $remove
+     * @return T[]
+     */
+    public static function remove(iterable $original, iterable $remove): array {
         $result = [ ];
 
         foreach($original as $enum) {

@@ -11,10 +11,10 @@ class ModulFilter {
 
     public function __construct(private readonly ModulRepositoryInterface $repository) { }
 
-    public function handle(Request $request) {
+    public function handle(Request $request): ModulFilterView {
         $module = ArrayUtils::createArrayWithKeys(
             $this->repository->findAll(),
-            fn(Modul $modul) => $modul->getId()
+            fn(Modul $modul) => (int)$modul->getId()
         );
 
         $selectedId = $request->query->getInt('modul');

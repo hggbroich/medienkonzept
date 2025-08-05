@@ -6,6 +6,9 @@ use App\Entity\MaterialArt;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<MaterialArt>
+ */
 class MaterialArtCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

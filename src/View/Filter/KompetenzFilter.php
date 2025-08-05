@@ -19,7 +19,7 @@ class KompetenzFilter {
     public function handle(Request $request): KompetenzFilterView {
         $kompetenzen = ArrayUtils::createArrayWithKeys(
             $this->repository->findAll(),
-            fn(Kompetenz $kompetenz) => $kompetenz->getId()
+            fn(Kompetenz $kompetenz) => (int)$kompetenz->getId()
         );
 
         $selectedId = $request->query->getInt('kompetenz');

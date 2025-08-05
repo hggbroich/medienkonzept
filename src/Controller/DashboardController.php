@@ -23,8 +23,11 @@ use App\View\Filter\KompetenzFilter;
 use App\View\Filter\LerneinheitArtFilter;
 use App\View\Filter\LerneinheitFunktionFilter;
 use App\View\Filter\ModulFilter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController {
@@ -36,7 +39,7 @@ class DashboardController extends AbstractController {
     #[Route('')]
     #[Route('/', name: 'dashboard')]
     #[Route('/jahrgangsstufe', name: 'jgst_redirect')]
-    public function index(JahrgangsstufeRepositoryInterface $jahrgangsstufeRepository) {
+    public function index(JahrgangsstufeRepositoryInterface $jahrgangsstufeRepository): RedirectResponse|Response {
         $jgst = $jahrgangsstufeRepository->findAll();
         if(count($jgst) === 0) {
             return $this->render('dashboard/empty.html.twig');
@@ -49,9 +52,9 @@ class DashboardController extends AbstractController {
     }
 
     #[Route('/jahrgangsstufe/{id}', name: 'jgst')]
-    public function jgst(Request $request, Jahrgangsstufe $jgst, JahrgangsstufeRepositoryInterface $jahrgangsstufeRepository,
+    public function jgst(Request $request, #[MapEntity] Jahrgangsstufe $jgst, JahrgangsstufeRepositoryInterface $jahrgangsstufeRepository,
                          FachFilter $fachFilter, KompetenzFilter $kompetenzFilter, ModulFilter $modulFilter,
-                         LerneinheitFunktionFilter $funktionFilter, LerneinheitArtFilter $artFilter) {
+                         LerneinheitFunktionFilter $funktionFilter, LerneinheitArtFilter $artFilter): Response {
         $fachFilterView = $fachFilter->handleRequest($request);
         $kompetenzFilterView = $kompetenzFilter->handle($request);
         $modulFilterView = $modulFilter->handle($request);
@@ -78,7 +81,7 @@ class DashboardController extends AbstractController {
     }
 
     #[Route('/fach', name: 'fach_redirect')]
-    public function redirectToFach(FachRepositoryInterface $fachRepository) {
+    public function redirectToFach(FachRepositoryInterface $fachRepository): RedirectResponse|Response {
         $faecher = $fachRepository->findAll();
         if(count($faecher) === 0) {
             return $this->render('dashboard/empty.html.twig');
@@ -91,9 +94,9 @@ class DashboardController extends AbstractController {
     }
 
     #[Route('/fach/{id}', 'fach')]
-    public function fach(Request $request, Fach $fach, FachRepositoryInterface $fachRepository,
+    public function fach(Request $request, #[MapEntity] Fach $fach, FachRepositoryInterface $fachRepository,
                          JahrgangsstufenFilter $jgstFilter, KompetenzFilter $kompetenzFilter, ModulFilter $modulFilter,
-                         LerneinheitFunktionFilter $funktionFilter, LerneinheitArtFilter $artFilter) {
+                         LerneinheitFunktionFilter $funktionFilter, LerneinheitArtFilter $artFilter): Response {
         $jgstFilterView = $jgstFilter->handleRequest($request);
         $kompetenzFilterView = $kompetenzFilter->handle($request);
         $modulFilterView = $modulFilter->handle($request);

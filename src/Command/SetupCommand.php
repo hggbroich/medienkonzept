@@ -10,28 +10,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-#[AsCommand(name: 'app:setup', description: 'Sets up the application.')]
-class SetupCommand extends Command {
+#[AsCommand(name: 'app:setup', description: 'Installiert die Anwendung.')]
+readonly class SetupCommand {
 
-    private PdoSessionHandler $pdoSessionHandler;
-    private EntityManagerInterface $em;
+    public function __construct(private EntityManagerInterface $em, private PdoSessionHandler $pdoSessionHandler) { }
 
-    public function __construct(EntityManagerInterface $em, PdoSessionHandler $pdoSessionHandler, string $name = null) {
-        parent::__construct($name);
-
-        $this->em = $em;
-        $this->pdoSessionHandler = $pdoSessionHandler;
-    }
-
-    public function execute(InputInterface $input, OutputInterface $output): int {
-        $style = new SymfonyStyle($input, $output);
-
+    public function __invoke(SymfonyStyle $style): int {
         $this->setupSessions($style);
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    private function setupSessions(SymfonyStyle $style) {
+    private function setupSessions(SymfonyStyle $style): void {
         $sql = "SHOW TABLES LIKE 'sessions';";
         $row = $this->em->getConnection()->executeQuery($sql);
 

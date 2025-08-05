@@ -1,22 +1,26 @@
 require('../css/app.scss');
 
-let bsn = require('bootstrap.native');
-let bsCustomFileInput = require('bs-custom-file-input');
+import { Modal, Tooltip, Popover } from "bootstrap";
+
 require('../../vendor/schulit/common-bundle/Resources/assets/js/polyfill');
 require('../../vendor/schulit/common-bundle/Resources/assets/js/menu');
 require('../../vendor/schulit/common-bundle/Resources/assets/js/dropdown-polyfill');
 
 document.addEventListener('DOMContentLoaded', function() {
-    bsCustomFileInput.init();
-
     document.querySelectorAll('[title]').forEach(function(el) {
-        new bsn.Tooltip(el, {
+        new Tooltip(el, {
             placement: 'bottom'
         });
     });
 
     document.querySelectorAll('[data-trigger="submit"]').forEach(function (el) {
-        el.addEventListener('change', function (event) {
+        let eventName = 'change';
+
+        if(el.nodeName === 'BUTTON') {
+            eventName = 'click';
+        }
+
+        el.addEventListener(eventName, function (event) {
             let confirmModalSelector = el.getAttribute('data-confirm');
             let form = this.closest('form');
 
@@ -26,15 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             let modalEl = document.querySelector(confirmModalSelector);
-            let modal = new bsn.Modal(modalEl);
+            let modal = new Modal(modalEl);
             modal.show();
 
             let confirmBtn = modalEl.querySelector('.confirm');
             confirmBtn.addEventListener('click', function(event) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
-
-                console.log(form);
 
                 form.submit();
             });

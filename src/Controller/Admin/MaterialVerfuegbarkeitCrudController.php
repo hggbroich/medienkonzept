@@ -6,6 +6,9 @@ use App\Entity\MaterialVerfuegbarkeit;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<MaterialVerfuegbarkeit>
+ */
 class MaterialVerfuegbarkeitCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

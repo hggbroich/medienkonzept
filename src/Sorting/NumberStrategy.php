@@ -2,11 +2,14 @@
 
 namespace App\Sorting;
 
+/**
+ * @implements SortingStrategyInterface<int|float>
+ */
 class NumberStrategy implements SortingStrategyInterface {
 
     /**
-     * @param int|float|double $objectA
-     * @param int|float|double $objectB
+     * @param int|float $objectA
+     * @param int|float $objectB
      * @return int
      */
     public function compare($objectA, $objectB): int {

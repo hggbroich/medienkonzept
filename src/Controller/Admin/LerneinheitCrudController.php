@@ -11,6 +11,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<Lerneinheit>
+ */
 class LerneinheitCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

@@ -15,7 +15,7 @@ class JahrgangsstufenFilter {
     public function handleRequest(Request $request): JahrgangsstufenFilterView {
         $stufen = ArrayUtils::createArrayWithKeys(
             $this->repository->findAll(),
-            fn(Jahrgangsstufe $jgst) => $jgst->getId()
+            fn(Jahrgangsstufe $jgst) => (int)$jgst->getId()
         );
 
         $selectedId = $request->query->getInt('jgst');

@@ -5,6 +5,9 @@ namespace App\Grouping;
 use App\Entity\Fach;
 use App\Entity\Lerneinheit;
 
+/**
+ * @implements GroupInterface<Fach, Lerneinheit>
+ */
 class FachLerneinheitenGroup implements GroupInterface {
 
     /** @var Lerneinheit[] */
@@ -28,11 +31,11 @@ class FachLerneinheitenGroup implements GroupInterface {
         return $this->lerneinheiten;
     }
 
-    public function getKey() {
+    public function getKey(): mixed {
         return $this->fach;
     }
 
-    public function addItem($item) {
+    public function addItem($item): void {
         $this->lerneinheiten[] = $item;
     }
 }

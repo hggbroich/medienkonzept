@@ -5,6 +5,9 @@ namespace App\Grouping;
 use App\Entity\Jahrgangsstufe;
 use App\Entity\Lerneinheit;
 
+/**
+ * @implements GroupInterface<Jahrgangsstufe, Lerneinheit>
+ */
 class JahrgangsstufeLerneinheitenGroup implements GroupInterface {
 
     /** @var Lerneinheit[] */
@@ -26,11 +29,11 @@ class JahrgangsstufeLerneinheitenGroup implements GroupInterface {
         return $this->lerneinheiten;
     }
 
-    public function getKey() {
+    public function getKey(): mixed {
         return $this->jahrgangsstufe;
     }
 
-    public function addItem($item) {
+    public function addItem($item): void {
         $this->lerneinheiten[] = $item;
     }
 }

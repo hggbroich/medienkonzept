@@ -15,7 +15,7 @@ class LerneinheitArtFilter {
     public function handleRequest(Request $request): LerneinheitArtFilterView {
         $arten = ArrayUtils::createArrayWithKeys(
             $this->repository->findAll(),
-            fn(LerneinheitArt $art) => $art->getId()
+            fn(LerneinheitArt $art) => (int)$art->getId()
         );
 
         $selectedId = $request->query->getInt('art');

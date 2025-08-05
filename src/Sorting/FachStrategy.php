@@ -4,9 +4,12 @@ namespace App\Sorting;
 
 use App\Entity\Fach;
 
-class FachStrategy implements SortingStrategyInterface {
+/**
+ * @implements SortingStrategyInterface<Fach>
+ */
+readonly class FachStrategy implements SortingStrategyInterface {
 
-    public function __construct(private readonly StringStrategy $strategy) {}
+    public function __construct(private StringStrategy $strategy) {}
 
     /**
      * @param Fach $objectA

@@ -19,5 +19,5 @@ logout_success:
 
 composer:
     resource: "@ComposerDependencyListBundle/Controller"
-    type: annotation
+    type: attribute
     prefix: /dependencies

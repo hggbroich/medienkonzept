@@ -6,7 +6,7 @@ use App\Entity\User;
 use LightSaml\SpBundle\Security\Http\Authenticator\SamlToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class UserVariable {
+readonly class UserVariable {
     public function __construct(private TokenStorageInterface $tokenStorage)
     {
     }
@@ -26,7 +26,10 @@ class UserVariable {
         return $this->getUser()->getLastname();
     }
 
-    public function getServices() {
+    /**
+     * @return array{}
+     */
+    public function getServices(): array {
         $token = $this->tokenStorage->getToken();
 
         if($token instanceof SamlToken) {

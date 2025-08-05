@@ -15,7 +15,7 @@ class FachFilter {
     public function handleRequest(Request $request): FachFilterView {
         $faecher = ArrayUtils::createArrayWithKeys(
             $this->repository->findAll(),
-            fn(Fach $fach) => $fach->getId()
+            fn(Fach $fach) => (int)$fach->getId()
         );
 
         $selectedId = $request->query->getInt('fach');

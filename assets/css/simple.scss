@@ -1,7 +1,7 @@
-@import '../../vendor/schulit/common-bundle/Resources/assets/css/bootstrap.scss';
+$enable-negative-margins: true;
 
 // Import Bootstrap
-@import '../../node_modules/bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
 // Import (and override) variables
 @import '../../vendor/schulit/common-bundle/Resources/assets/css/variables.scss';
@@ -15,12 +15,14 @@
 // Import SchulIT design
 @import '../../vendor/schulit/common-bundle/Resources/assets/css/layout.scss';
 @import '../../vendor/schulit/common-bundle/Resources/assets/css/callouts.scss';
-@import '../../vendor/schulit/common-bundle/Resources/assets/css/div-tables.scss';
-@import '../../vendor/schulit/common-bundle/Resources/assets/css/swagger.scss';
 
-.sticky-sidebar {
-  position: -webkit-sticky;
-  position: sticky;
-  align-self: flex-start;
-  top: 1rem;
+@media screen and (max-width:768px) {
+  header#page-header {
+    padding:10px;
+  }
+}
+
+footer {
+  background: none;
+  border: none;
 }

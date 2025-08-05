@@ -7,6 +7,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use SebastianBergmann\CodeCoverage\Report\Text;
 
+/**
+ * @extends AbstractCrudController<Fach>
+ */
 class FachCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

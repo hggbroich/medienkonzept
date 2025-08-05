@@ -137,3 +137,7 @@ fabric.properties
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/yarn,phpstorm+all
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

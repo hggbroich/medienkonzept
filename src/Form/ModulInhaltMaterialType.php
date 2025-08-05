@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModulInhaltMaterialType extends AbstractType {
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add('material', EntityType::class, [
                 'class' => Material::class,
@@ -24,7 +24,7 @@ class ModulInhaltMaterialType extends AbstractType {
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver): void {
         $resolver->setDefault('data_class', ModulInhaltMaterial::class);
     }
 }

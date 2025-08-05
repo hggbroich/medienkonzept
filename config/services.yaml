@@ -14,12 +14,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    _instanceof:
-        App\Grouping\GroupingStrategyInterface:
-            tags: [ 'app.grouping_strategy' ]
-        App\Sorting\SortingStrategyInterface:
-            tags: [ 'app.sorting_strategy' ]
-
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -68,13 +62,3 @@ services:
     SchulIT\CommonBundle\Menu\Voter:
         tags:
             - { name: knp_menu.voter }
-
-
-    # SERVICES
-    App\Grouping\Grouper:
-        arguments:
-            - !tagged app.grouping_strategy
-
-    App\Sorting\Sorter:
-        arguments:
-            - !tagged app.sorting_strategy

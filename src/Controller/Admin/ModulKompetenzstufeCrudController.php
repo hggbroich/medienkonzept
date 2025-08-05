@@ -6,6 +6,9 @@ use App\Entity\ModulKompetenzstufe;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<ModulKompetenzstufe>
+ */
 class ModulKompetenzstufeCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

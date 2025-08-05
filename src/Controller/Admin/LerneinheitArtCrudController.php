@@ -6,6 +6,9 @@ use App\Entity\LerneinheitArt;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<LerneinheitArt>
+ */
 class LerneinheitArtCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

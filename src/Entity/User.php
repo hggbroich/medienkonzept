@@ -23,6 +23,7 @@ class User implements UserInterface {
     #[ORM\Column(type: 'string')]
     private string $lastname;
 
+    /** @var string[] $roles */
     #[ORM\Column(type: 'json')]
     private array $roles = [ 'ROLE_USER' ];
 
@@ -62,21 +63,31 @@ class User implements UserInterface {
         return $this;
     }
 
+    /**
+     * @param string[] $roles
+     * @return $this
+     */
     public function setRoles(array $roles): User {
         $this->roles = $roles;
         return $this;
     }
 
+    /**
+     * @return string[]
+     */
     public function getRoles(): array {
         return $this->roles;
     }
 
-    public function eraseCredentials() { }
+    public function eraseCredentials(): void { }
 
     public function getUserIdentifier(): string {
         return $this->username;
     }
 
+    /**
+     * @return array{'id': int|null, 'username': string}
+     */
     public function __serialize(): array {
         return [
             'id' => $this->getId(),
@@ -84,6 +95,10 @@ class User implements UserInterface {
         ];
     }
 
+    /**
+     * @param array{'id': int|null, 'username': string} $data
+     * @return void
+     */
     public function __unserialize(array $data): void {
         $this->id = $data['id'] ?? null;
         $this->username = $data['username'];

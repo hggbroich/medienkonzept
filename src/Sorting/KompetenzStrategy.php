@@ -4,9 +4,12 @@ namespace App\Sorting;
 
 use App\Entity\Kompetenz;
 
-class KompetenzStrategy implements SortingStrategyInterface {
+/**
+ * @implements SortingStrategyInterface<Kompetenz>
+ */
+readonly class KompetenzStrategy implements SortingStrategyInterface {
 
-    public function __construct(private readonly NumberStrategy $strategy) { }
+    public function __construct(private NumberStrategy $strategy) { }
 
     /**
      * @param Kompetenz $objectA

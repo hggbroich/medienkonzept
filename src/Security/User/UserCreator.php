@@ -10,19 +10,9 @@ use SchulIT\CommonBundle\Saml\ClaimTypes;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
-class UserCreator implements UserCreatorInterface {
+readonly class UserCreator implements UserCreatorInterface {
+    public function __construct(private EntityManagerInterface $em, private UserMapper $userMapper) { }
 
-    private $em;
-    private $userMapper;
-
-    public function __construct(EntityManagerInterface $em, UserMapper $userMapper) {
-        $this->em = $em;
-        $this->userMapper = $userMapper;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function createUser(Response $response): ?UserInterface {
         $id = $response->getFirstAssertion()
             ->getFirstAttributeStatement()

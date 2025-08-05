@@ -4,9 +4,12 @@ namespace App\Sorting;
 
 use App\Grouping\FachLerneinheitenGroup;
 
-class FachLerneinheitenGroupStrategy implements SortingStrategyInterface {
+/**
+ * @implements SortingStrategyInterface<FachLerneinheitenGroup>
+ */
+readonly class FachLerneinheitenGroupStrategy implements SortingStrategyInterface {
 
-    public function __construct(private readonly FachStrategy $fachStrategy) { }
+    public function __construct(private FachStrategy $fachStrategy) { }
 
     /**
      * @param FachLerneinheitenGroup $objectA

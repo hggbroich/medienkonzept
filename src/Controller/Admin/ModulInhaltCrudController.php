@@ -12,6 +12,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 
+/**
+ * @extends AbstractCrudController<ModulInhalt>
+ */
 class ModulInhaltCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

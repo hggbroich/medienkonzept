@@ -4,9 +4,12 @@ namespace App\Sorting;
 
 use App\Grouping\JahrgangsstufeLerneinheitenGroup;
 
-class JahrgangsstufeLerneinheitenGroupStrategy implements SortingStrategyInterface {
+/**
+ * @implements SortingStrategyInterface<JahrgangsstufeLerneinheitenGroup>
+ */
+readonly class JahrgangsstufeLerneinheitenGroupStrategy implements SortingStrategyInterface {
 
-    public function __construct(private readonly StringStrategy $stringStrategy) { }
+    public function __construct(private StringStrategy $stringStrategy) { }
 
     /**
      * @param JahrgangsstufeLerneinheitenGroup $objectA
