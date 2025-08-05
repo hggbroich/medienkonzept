@@ -51,13 +51,24 @@ services:
 
     # MENU
     App\Menu\Builder:
-        arguments:
-            $idpProfileUrl: '%env(IDP_PROFILE_URL)%'
         tags:
             - { name: knp_menu.menu_builder, method: mainMenu, alias: mainMenu }
-            - { name: knp_menu.menu_builder, method: userMenu, alias: userMenu }
-            - { name: knp_menu.menu_builder, method: adminMenu, alias: adminMenu }
+
+    App\Menu\ServicesMenuBuilder:
+        tags:
             - { name: knp_menu.menu_builder, method: servicesMenu, alias: servicesMenu }
+
+    App\Menu\UserMenuBuilder:
+        tags:
+            - { name: knp_menu.menu_builder, method: userMenu, alias: userMenu }
+
+    App\Menu\AdminMenuBuilder:
+        tags:
+            - { name: knp_menu.menu_builder, method: adminMenu, alias: adminMenu }
+
+    App\Menu\SettingsMenuBuilder:
+        tags:
+            - { name: knp_menu.menu_builder, method: settingsMenu, alias: settingsMenu }
 
     SchulIT\CommonBundle\Menu\Voter:
         tags:

@@ -12,7 +12,7 @@
         "doctrine/orm": "^3.0",
         "easycorp/easyadmin-bundle": "^4.4",
         "frostiede/composer-dependency-list-bundle": "^4.0",
-        "jbtronics/settings-bundle": "^2.4",
+        "jbtronics/settings-bundle": "^2.6",
         "knplabs/knp-menu-bundle": "^3.2",
         "league/commonmark": "^2.3",
         "lightsaml2/lightsaml": "^3.0",

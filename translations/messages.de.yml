@@ -21,5 +21,14 @@ dashboard:
   fach: Übersicht (nach Fach)
 
 admin:
+  label: Verwaltung
   ea:
     label: Datenverwaltung
+
+settings:
+  label: Einstellungen
+  app:
+    label: Allgemeine Einstellungen
+    custom_css:
+      label: Benutzerdefiniertes CSS
+      help: Hier kann benutzerdefiniertes CSS eingebunden werden, um die Software nach eigenen Wünschen einzufärben.

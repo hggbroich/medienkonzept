@@ -1,0 +1,20 @@
+{% extends "settings/_settings.html.twig" %}
+
+{% block title %}{{ 'settings.app.label'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.label'|trans }}</a></li>
+        <li class="breadcrumb-item">{{ 'settings.label'|trans }}</a></li>
+    </ol>
+{% endblock %}
+
+{% block settings_content %}
+    <div class="card">
+        <div class="card-header">{{ 'settings.app.label'|trans }}</div>
+
+        <div class="card-body">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock %}
