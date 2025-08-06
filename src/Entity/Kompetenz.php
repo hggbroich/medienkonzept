@@ -12,7 +12,7 @@ class Kompetenz {
     use IdTrait;
 
     #[Gedmo\SortableGroup]
-    #[ORM\ManyToOne(targetEntity: Kompetenzbereich::class)]
+    #[ORM\ManyToOne(targetEntity: Kompetenzbereich::class, inversedBy: 'kompetenzen')]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     #[Assert\NotNull]
     private ?Kompetenzbereich $kompetenzbereich;

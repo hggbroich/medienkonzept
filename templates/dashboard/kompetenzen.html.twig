@@ -1,0 +1,41 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'dashboard.jahrgangsstufe'|trans }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    {% for stufe in jahrgangsstufen %}
+        <div class="row mb-2">
+            {% for bereich in bereiche %}
+                <div class="col-6 col-md-4">
+                    <div class="card">
+                        <div class="card-header" style="background: {{ bereich.color }}; color: {{ foreground(bereich.color) }}">
+                            <span class="fw-bold">{{ stufe.bezeichnung }}</span>
+                            <span>{{ bereich.bezeichnung }}</span>
+                        </div>
+
+                        <div class="row mb-2" style="--bs-gutter-x:0;">
+                            {% for kompetenz in bereich.kompetenzen %}
+                                <div class="col {% if not loop.last %}border-end{% endif %}">
+                                    <div class="list-group list-group-flush">
+                                        <div class="list-group-item fw-semibold" title="{{ kompetenz.bezeichnung }}">
+                                            {{ bereich.laufendeNummer }}.{{ kompetenz.laufendeNummer }}
+                                        </div>
+                                        {% for row in overview.modulInhalte(stufe, kompetenz) %}
+                                            {% for inhalt in row.inhalte %}
+                                                <a href="{{ path('show_modulinhalt', { id: inhalt.id }) }}" class="list-group-item list-group-item-action" title="{{ inhalt.bezeichnung }}">
+                                                    {{ row.fach.kuerzel }}
+                                                </a>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

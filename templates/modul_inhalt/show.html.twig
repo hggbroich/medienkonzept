@@ -1,0 +1,108 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'dashboard.jahrgangsstufe'|trans }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ modulInhalt.bezeichnung }}</h5>
+            {{ modulInhalt.zusammenfassung|markdown_to_html }}
+
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    {% for werkzeug in modulInhalt.werkzeuge %}
+                        <div class="d-flex flex-row">
+                            <div class="me-1">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div>
+                                {{ werkzeug.bezeichnung }}
+
+                                {% if werkzeug.beschreibung is not empty %}
+                                    <div class="text-secondary">{{ werkzeug.beschreibung }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="col-md-4">
+                    {% for material in modulInhalt.materialien %}
+                        <div class="d-flex flex-row">
+                            <div class="me-1">
+                                <i class="fas fa-book"></i>
+                            </div>
+
+                            <div>
+                                {{ material.material.bezeichnung }}
+
+                                {% if material.detail is not empty %}
+                                    <div class="text-secondary">{{ material.detail }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="col-md-4">
+                    {% for lerneinheit in modulInhalt.lerneinheiten %}
+                        <div class="d-flex flex-row">
+                            <div class="me-1">
+                                <i class="fas fa-chalkboard"></i>
+                            </div>
+                            <div>
+                                {{ lerneinheit.fach.bezeichnung }}
+
+                                <div class="text-secondary">
+                                    {{ lerneinheit.bezeichnung }}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">{{ 'modulinhalt.kompetenzen'|trans }}</div>
+
+        <div class="table-responsive mb-1">
+            <table class="table card-table">
+                <thead>
+                <tr>
+                    {% for bereich in bereiche %}
+                        <th colspan="{{ bereich.kompetenzen|length }}" class="align-middle">{{ bereich.bezeichnung }}</th>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for bereich in bereiche %}
+                        {% for kompetenz in bereich.kompetenzen %}
+                            <th title="{{ kompetenz.bezeichnung }}">{{ bereich.laufendeNummer }}.{{ kompetenz.laufendeNummer }}</th>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for bereich in bereiche %}
+                        {% for kompetenz in bereich.kompetenzen %}
+                            <td>
+                                {% if modulInhalt.kompetenzen.contains(kompetenz) %}
+                                    <i class="fas fa-check text-success"></i>
+                                {% else %}
+
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
