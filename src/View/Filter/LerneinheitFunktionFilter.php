@@ -18,7 +18,7 @@ class LerneinheitFunktionFilter {
             fn(LerneinheitFunktion $funktion) => (int)$funktion->getId()
         );
 
-        $selectedId = $request->query->getInt('funktion');
+        $selectedId = $request->query->filter('funktion', filter: FILTER_VALIDATE_INT, options: [ 'flags' => FILTER_NULL_ON_FAILURE]);
         $selected = null;
 
         if($selectedId > 0 && array_key_exists($selectedId, $funktionen)) {

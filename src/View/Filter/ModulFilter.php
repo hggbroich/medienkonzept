@@ -17,7 +17,7 @@ class ModulFilter {
             fn(Modul $modul) => (int)$modul->getId()
         );
 
-        $selectedId = $request->query->getInt('modul');
+        $selectedId = $request->query->filter('modul', filter: FILTER_VALIDATE_INT, options: [ 'flags' => FILTER_NULL_ON_FAILURE]);
         $selected = null;
 
         if($selectedId > 0 && array_key_exists($selectedId, $module)) {

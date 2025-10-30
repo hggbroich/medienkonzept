@@ -22,8 +22,8 @@ class KompetenzFilter {
             fn(Kompetenz $kompetenz) => (int)$kompetenz->getId()
         );
 
-        $selectedId = $request->query->getInt('kompetenz');
-        $selected = nulL;
+        $selectedId = $request->query->filter('kompetenz', filter: FILTER_VALIDATE_INT, options: [ 'flags' => FILTER_NULL_ON_FAILURE]);
+        $selected = null;
 
         if($selectedId > 0 && array_key_exists($selectedId, $kompetenzen)) {
             $selected = $kompetenzen[$selectedId];

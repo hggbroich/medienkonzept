@@ -18,7 +18,7 @@ class JahrgangsstufenFilter {
             fn(Jahrgangsstufe $jgst) => (int)$jgst->getId()
         );
 
-        $selectedId = $request->query->getInt('jgst');
+        $selectedId = $request->query->filter('jgst', filter: FILTER_VALIDATE_INT, options: [ 'flags' => FILTER_NULL_ON_FAILURE]);
         $selected = null;
 
         if($selectedId > 0 && array_key_exists($selectedId, $stufen)) {

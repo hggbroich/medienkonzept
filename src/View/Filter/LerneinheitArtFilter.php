@@ -18,7 +18,7 @@ class LerneinheitArtFilter {
             fn(LerneinheitArt $art) => (int)$art->getId()
         );
 
-        $selectedId = $request->query->getInt('art');
+        $selectedId = $request->query->filter('art', filter: FILTER_VALIDATE_INT, options: [ 'flags' => FILTER_NULL_ON_FAILURE]);
         $selected = null;
 
         if($selectedId > 0 && array_key_exists($selectedId, $arten)) {

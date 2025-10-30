@@ -18,7 +18,7 @@ class FachFilter {
             fn(Fach $fach) => (int)$fach->getId()
         );
 
-        $selectedId = $request->query->getInt('fach');
+        $selectedId = $request->query->filter('fach', filter: FILTER_VALIDATE_INT, options: [ 'flags' => FILTER_NULL_ON_FAILURE]);
         $selected = null;
 
         if($selectedId > 0 && array_key_exists($selectedId, $faecher)) {
