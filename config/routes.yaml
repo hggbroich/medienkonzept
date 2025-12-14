@@ -6,10 +6,6 @@ lightsaml_sp:
     resource: "@LightSamlSpBundle/Resources/config/routing.yml"
     prefix: saml
 
-common:
-    resource: "@CommonBundle/Controller"
-    type: attribute
-
 logout:
     path: /logout
 
