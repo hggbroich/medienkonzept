@@ -19,6 +19,7 @@ lerneinheit:
 dashboard:
   jahrgangsstufe: Übersicht (nach Jgst.)
   fach: Übersicht (nach Fach)
+  kompetenzen: Übersicht (nach Kompetenz)
 
 admin:
   label: Verwaltung

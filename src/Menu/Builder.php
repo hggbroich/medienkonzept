@@ -27,6 +27,10 @@ class Builder {
             'route' => 'fach_redirect'
         ])
             ->setExtra('icon', 'fa fa-home');
+        $menu->addChild('dashboard.kompetenzen', [
+            'route' => 'dashboard_kompetenzen'
+        ])
+            ->setExtra('icon', 'fa fa-home');
 
         if($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
             $menu->addChild('admin.ea.label', [
