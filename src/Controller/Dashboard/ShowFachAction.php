@@ -19,6 +19,7 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ShowFachAction extends AbstractController {
@@ -31,9 +32,17 @@ class ShowFachAction extends AbstractController {
     }
 
     #[Route('/fach/{id}', name: 'fach')]
-    public function __invoke(Request $request, #[MapEntity] Fach $fach, FachRepositoryInterface $fachRepository,
-                         JahrgangsstufenFilter $jgstFilter, KompetenzFilter $kompetenzFilter, ModulFilter $modulFilter,
-                         LerneinheitFunktionFilter $funktionFilter, LerneinheitArtFilter $artFilter): Response {
+    public function __invoke(
+        Request $request,
+        #[MapEntity] Fach $fach,
+        #[MapQueryParameter] bool|null $print,
+        FachRepositoryInterface $fachRepository,
+        JahrgangsstufenFilter $jgstFilter,
+        KompetenzFilter $kompetenzFilter,
+        ModulFilter $modulFilter,
+        LerneinheitFunktionFilter $funktionFilter,
+        LerneinheitArtFilter $artFilter
+    ): Response {
         $jgstFilterView = $jgstFilter->handleRequest($request);
         $kompetenzFilterView = $kompetenzFilter->handle($request);
         $modulFilterView = $modulFilter->handle($request);
@@ -51,7 +60,12 @@ class ShowFachAction extends AbstractController {
             $groups = array_filter($groups, fn(JahrgangsstufeLerneinheitenGroup $group) => $group->getJahrgangsstufe()->getId() === $jgstFilterView->getAktuelleJahrgangsstufe()->getId());
         }
 
-        return $this->render('dashboard/fach.html.twig', [
+        $template = 'dashboard/fach.html.twig';
+        if($print === true) {
+            $template = 'dashboard/fach_print.html.twig';
+        }
+
+        return $this->render($template, [
             'fach' => $fach,
             'faecher' => $fachRepository->findAll(),
             'jgstFilter' => $jgstFilterView,

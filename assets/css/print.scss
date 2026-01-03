@@ -1,0 +1,58 @@
+body {
+  background: white;
+  font-size: 80%;
+}
+
+header {
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid black;
+  padding: 1em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: white;
+}
+
+main {
+  margin-bottom: 1em;
+  page-break-after: always;
+}
+
+table {
+  page-break-after: always;
+  page-break-inside: auto;
+}
+
+main table:last-child {
+  break-after: avoid-page;
+}
+
+tr {
+  page-break-inside: avoid;
+  page-break-after: auto;
+}
+
+footer {
+  background: white;
+  border: none;
+  padding: 1em;
+  position: fixed;
+  bottom: 0;
+}
+
+thead {
+  display: table-header-group;
+}
+
+thead tr:first-child th {
+  padding-top: 4.5em !important;
+}
+
+@page {
+  size: landscape;
+
+  @bottom-right {
+    counter-increment: page;
+    content: "Seite " counter(pageNumber);
+  }
+}

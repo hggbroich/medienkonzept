@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta %}{% endblock %}
+    <title>{% block title %}{% endblock %} | {{ config.name }}</title>
+
+    {% block css %}
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('build/print.css') }}" type="text/css">
+
+        {% set customCSS = customCSS() %}
+        {% if customCSS is not empty %}
+            <style>
+                {{ customCSS }}
+            </style>
+        {% endif %}
+    {% endblock %}
+
+    {% block head %}{% endblock %}
+</head>
+
+<body class="{% block bodyClass %}{% endblock %}">
+    <header>
+        <strong>{{ block('title') }}  | {{ config.name }}</strong>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        Gedruckt: {{ date('now')|format_datetime }}
+    </footer>
+</body>
+
+
+{% block pre_javascript %}{% endblock %}
+{% block javascript %}
+<script>
+    window.onload = function() {
+        window.print();
+    }
+</script>
+{% endblock %}
+{% block post_javascript %}{% endblock %}
+
+</body>
+</html>

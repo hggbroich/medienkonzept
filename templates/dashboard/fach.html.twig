@@ -41,6 +41,14 @@
 
             <div class="col-md-3 sticky-sidebar">
                 <div class="card">
+                    <div class="list-group list-group-flush">
+                        <a href="{{ path('fach', { fach: fach.id, print: true }|merge(currentFilter)) }}" target="_blank" class="list-group-item list-group-item-action">
+                            <i class="fas fa-print"></i> {{ 'actions.print'|trans }}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-filter"></i> {{ 'filter.label'|trans }}</h5>
 

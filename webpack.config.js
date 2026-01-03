@@ -12,6 +12,7 @@ Encore
 
     .addEntry('app', './assets/js/app.js')
     .addStyleEntry('simple', './assets/css/simple.scss')
+    .addStyleEntry('print', './assets/css/print.scss')
 
     .disableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

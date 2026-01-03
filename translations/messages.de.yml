@@ -26,6 +26,9 @@ admin:
   ea:
     label: Datenverwaltung
 
+actions:
+  print: Drucken
+
 settings:
   label: Einstellungen
   app:
