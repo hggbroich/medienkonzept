@@ -3,37 +3,70 @@
 {% block title %}{{ 'dashboard.jahrgangsstufe'|trans }}{% endblock %}
 
 {% block content %}
+    {% set klassenColumns = [ ['05','06'], ['07','08'], ['09','10'], ['EF', 'Q1', 'Q2'] ] %}
 <div class="container-fluid px-0">
-    {% for stufe in jahrgangsstufen %}
-        <div class="row mb-2">
-            {% for bereich in bereiche %}
-                <div class="col-6 col-md-4">
-                    <div class="card">
-                        <div class="card-header" style="background: {{ bereich.color }}; color: {{ foreground(bereich.color) }}">
-                            <span class="fw-bold">{{ stufe.bezeichnung }}</span>
-                            <span>{{ bereich.bezeichnung }}</span>
-                        </div>
+    {% for bereich in bereiche %}
+        <div class="card">
+            <div class="card-header" style="background: {{ bereich.color }}; color: {{ foreground(bereich.color) }}">
+                <span>{{ bereich.bezeichnung }}</span>
+            </div>
 
-                        <div class="row mb-2" style="--bs-gutter-x:0;">
-                            {% for kompetenz in bereich.kompetenzen %}
-                                <div class="col {% if not loop.last %}border-end{% endif %}">
-                                    <div class="list-group list-group-flush">
-                                        <div class="list-group-item fw-semibold" title="{{ kompetenz.bezeichnung }}">
-                                            {{ bereich.laufendeNummer }}.{{ kompetenz.laufendeNummer }}
-                                        </div>
-                                        {% for row in overview.modulInhalte(stufe, kompetenz) %}
-                                            {% for inhalt in row.inhalte %}
-                                                <a href="{{ path('show_modulinhalt', { id: inhalt.id }) }}" class="list-group-item list-group-item-action" title="{{ inhalt.bezeichnung }}">
-                                                    {{ row.fach.kuerzel }}
-                                                </a>
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+            {% for kompetenz in bereich.kompetenzen %}
+                <div class="card-header {% if not loop.first %}border-top{% endif %}">
+                    <div class="fw-semibold">{{ bereich.laufendeNummer }}.{{ kompetenz.laufendeNummer }} {{ kompetenz.bezeichnung }}</div>
+
+                    <div class="text-muted">{{ kompetenz.beschreibung }}</div>
                 </div>
+
+                <table class="table table-bordered">
+                    <colgroup>
+                        {% for i in range(1, klassenColumns|length) %}
+                            <col style="width: calc(1/{{ klassenColumns|length }} * 100%)">
+                        {% endfor %}
+                    </colgroup>
+
+                    <thead>
+                    <tr>
+                        {% for klassen in klassenColumns %}
+                            <th>Klasse {{ klassen|enumerate }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            {% for klassen in klassenColumns %}
+                            <td>
+                                {% for lerneinheit in overview.modulInhalte(klassen, kompetenz) %}
+                                    <div class="mb-4">
+                                        <div class="fw-bold">
+                                            {% if lerneinheit.fach is not null %}{{ lerneinheit.fach }}{% endif %}
+                                        </div>
+
+                                        <div>
+                                            <ul class="list-unstyled">
+                                                {% for inhalt in lerneinheit.modulInhalte %}
+                                                    <li>
+                                                        <span class="fw-semibold">
+                                                        {% for jgst in lerneinheit.jahrgangsstufen %}
+                                                            {{ jgst }}{% if not loop.last %}, {% endif %}
+                                                        {% endfor %}
+                                                        </span>
+
+                                                        <a href="{{ path('show_modulinhalt', { id: inhalt.id }) }}">{{ inhalt.bezeichnung }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+
+                                        {{ lerneinheit.bezeichnung }}
+                                    </div>
+                                {% endfor %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
             {% endfor %}
         </div>
     {% endfor %}

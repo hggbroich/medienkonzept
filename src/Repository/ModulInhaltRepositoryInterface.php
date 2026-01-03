@@ -14,9 +14,9 @@ interface ModulInhaltRepositoryInterface {
     public function findAll(): array;
 
     /**
-     * @param Jahrgangsstufe $jahrgangsstufe
+     * @param Jahrgangsstufe[] $jahrgangsstufen
      * @param Kompetenz $kompetenz
      * @return ModulInhalt[]
      */
-    public function findBy(Jahrgangsstufe $jahrgangsstufe, Kompetenz $kompetenz): array;
+    public function findBy(array $jahrgangsstufen, Kompetenz $kompetenz): array;
 }

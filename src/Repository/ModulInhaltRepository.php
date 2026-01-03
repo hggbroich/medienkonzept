@@ -14,7 +14,12 @@ class ModulInhaltRepository extends AbstractRepository implements ModulInhaltRep
         return $this->em->getRepository(ModulInhalt::class)->findAll();
     }
 
-    public function findBy(Jahrgangsstufe $jahrgangsstufe, Kompetenz $kompetenz): array {
+    public function findBy(array $jahrgangsstufen, Kompetenz $kompetenz): array {
+        $jgstIds = array_map(
+            fn(Jahrgangsstufe $jahrgangsstufe): int => $jahrgangsstufe->getId(),
+            $jahrgangsstufen
+        );
+
         $qbInner = $this->em->createQueryBuilder()
             ->select('mInner.id')
             ->from(ModulInhalt::class, 'mInner')
@@ -22,7 +27,7 @@ class ModulInhaltRepository extends AbstractRepository implements ModulInhaltRep
             ->leftJoin('mInner.lerneinheiten', 'lInner')
             ->leftJoin('lInner.jahrgangsstufen', 'jInner')
             ->where('kInner.id = :kompetenz')
-            ->andWhere('jInner.id = :jgst');
+            ->andWhere('jInner.id IN(:jgst)');
 
         $qb = $this->em->createQueryBuilder();
 
@@ -36,7 +41,7 @@ class ModulInhaltRepository extends AbstractRepository implements ModulInhaltRep
                 $qb->expr()->in('m.id', $qbInner->getDQL())
             )
             ->setParameter('kompetenz', $kompetenz)
-            ->setParameter('jgst', $jahrgangsstufe)
+            ->setParameter('jgst', $jgstIds)
             ->getQuery()
             ->getResult();
     }
