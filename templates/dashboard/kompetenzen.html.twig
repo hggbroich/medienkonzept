@@ -39,8 +39,11 @@
                             <td>
                                 {% for lerneinheit in overview.modulInhalte(klassen, kompetenz) %}
                                     <div class="mb-4">
-                                        <div class="fw-bold">
-                                            {% if lerneinheit.fach is not null %}{{ lerneinheit.fach }}{% endif %}
+                                        <div>
+                                            <span class="fw-bold">
+                                                {% if lerneinheit.fach is not null %}{{ lerneinheit.fach }}: {% endif %}
+                                            </span>
+                                            {{ lerneinheit.bezeichnung }}
                                         </div>
 
                                         <div>
@@ -58,8 +61,6 @@
                                                 {% endfor %}
                                             </ul>
                                         </div>
-
-                                        {{ lerneinheit.bezeichnung }}
                                     </div>
                                 {% endfor %}
                             </td>
