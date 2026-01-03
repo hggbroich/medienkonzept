@@ -2,9 +2,9 @@ require('../css/app.scss');
 
 import { Modal, Tooltip, Popover } from "bootstrap";
 
-require('../../vendor/schulit/common-bundle/Resources/assets/js/polyfill');
-require('../../vendor/schulit/common-bundle/Resources/assets/js/menu');
-require('../../vendor/schulit/common-bundle/Resources/assets/js/dropdown-polyfill');
+require('../../vendor/schulit/common-bundle/assets/js/polyfill');
+require('../../vendor/schulit/common-bundle/assets/js/menu');
+require('../../vendor/schulit/common-bundle/assets/js/dropdown-polyfill');
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('[title]').forEach(function(el) {
