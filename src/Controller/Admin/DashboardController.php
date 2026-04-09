@@ -17,12 +17,14 @@ use App\Entity\Modul;
 use App\Entity\ModulInhalt;
 use App\Entity\ModulKompetenzstufe;
 use App\Entity\Werkzeug;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[AdminDashboard(routePath: '/admin/ea', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
     #[Route('/admin/ea', name: 'admin')]
@@ -40,25 +42,25 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section('Stammdaten');
-        yield MenuItem::linkToCrud('Fach', '', Fach::class);
-        yield MenuItem::linkToCrud('Jahrgang', '', Jahrgang::class);
-        yield MenuItem::linkToCrud('Jahrgangsstufe', '', Jahrgangsstufe::class);
+        yield MenuItem::linkTo(FachCrudController::class, 'Fach', '');
+        yield MenuItem::linkTo(JahrgangCrudController::class, 'Jahrgang', '');
+        yield MenuItem::linkTo(JahrgangsstufeCrudController::class, 'Jahrgangsstufe', '');
         yield MenuItem::section('Lerneinheit');
-        yield MenuItem::linkToCrud('Lerneinheit', '', Lerneinheit::class)->setCssClass('fw-bold');
-        yield MenuItem::linkToCrud('LerneinheitArt', '', LerneinheitArt::class);
-        yield MenuItem::linkToCrud('LerneinheitFunktion', '', LerneinheitFunktion::class);
+        yield MenuItem::linkTo(LerneinheitCrudController::class, 'Lerneinheit', '')->setCssClass('fw-bold');
+        yield MenuItem::linkTo(LerneinheitArtCrudController::class, 'LerneinheitArt', '');
+        yield MenuItem::linkTo(LerneinheitFunktionCrudController::class, 'LerneinheitFunktion', '');
         yield MenuItem::section('Material');
-        yield MenuItem::linkToCrud('Material', '', Material::class);
-        yield MenuItem::linkToCrud('MaterialArt', '', MaterialArt::class);
-        yield MenuItem::linkToCrud('MaterialVerfuegbarkeit', '', MaterialVerfuegbarkeit::class);
+        yield MenuItem::linkTo(MaterialCrudController::class, 'Material', '');
+        yield MenuItem::linkTo(MaterialArtCrudController::class, 'MaterialArt', '');
+        yield MenuItem::linkTo(MaterialVerfuegbarkeitCrudController::class, 'MaterialVerfuegbarkeit', '');
         yield MenuItem::section('Kompetenzen');
-        yield MenuItem::linkToCrud('Kompetenz', '', Kompetenz::class);
-        yield MenuItem::linkToCrud('Kompetenzbereich', '', Kompetenzbereich::class);
+        yield MenuItem::linkTo(KompetenzCrudController::class, 'Kompetenz', '');
+        yield MenuItem::linkTo(KompetenzbereichCrudController::class, 'Kompetenzbereich', '');
         yield MenuItem::section('Modul');
-        yield MenuItem::linkToCrud('Modul', '', Modul::class);
-        yield MenuItem::linkToCrud('ModulInhalt', '', ModulInhalt::class)->setCssClass('fw-bold');
-        yield MenuItem::linkToCrud('ModulKompetenzstufe', '', ModulKompetenzstufe::class);
+        yield MenuItem::linkTo(ModulCrudController::class, 'Modul', '');
+        yield MenuItem::linkTo(ModulInhaltCrudController::class, 'ModulInhalt', '')->setCssClass('fw-bold');
+        yield MenuItem::linkTo(ModulKompetenzstufeCrudController::class, 'ModulKompetenzstufe', '');
         yield MenuItem::section('Werkzeug');
-        yield MenuItem::linkToCrud('Werkzeug', '', Werkzeug::class);
+        yield MenuItem::linkTo(WerkzeugCrudController::class, 'Werkzeug', '');
     }
 }
