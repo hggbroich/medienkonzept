@@ -4,11 +4,12 @@ namespace App\Grouping;
 
 use App\Entity\Jahrgangsstufe;
 use App\Entity\Lerneinheit;
+use Override;
 
 /**
  * @implements GroupInterface<Jahrgangsstufe, Lerneinheit>
  */
-class JahrgangsstufeLerneinheitenGroup implements GroupInterface {
+class JahrgangsstufeLerneinheitenGroup implements GroupInterface, SortableGroupInterface {
 
     /** @var Lerneinheit[] */
     private array $lerneinheiten = [ ];
@@ -35,5 +36,10 @@ class JahrgangsstufeLerneinheitenGroup implements GroupInterface {
 
     public function addItem($item): void {
         $this->lerneinheiten[] = $item;
+    }
+
+    #[Override]
+    public function &getItems(): array {
+        return $this->lerneinheiten;
     }
 }

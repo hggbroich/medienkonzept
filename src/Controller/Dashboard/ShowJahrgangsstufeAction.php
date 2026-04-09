@@ -8,6 +8,7 @@ use App\Grouping\Grouper;
 use App\Repository\JahrgangsstufeRepositoryInterface;
 use App\Repository\LerneinheitRepositoryInterface;
 use App\Sorting\FachLerneinheitenGroupStrategy;
+use App\Sorting\LerneinheitBezeichnungStrategy;
 use App\Sorting\Sorter;
 use App\View\Filter\FachFilter;
 use App\View\Filter\KompetenzFilter;
@@ -45,6 +46,7 @@ class ShowJahrgangsstufeAction extends AbstractController {
 
         $groups = $this->grouper->group($module, FachLerneinheitenGrouping::class);
         $this->sorter->sort($groups, FachLerneinheitenGroupStrategy::class);
+        $this->sorter->sortGroupItems($groups, LerneinheitBezeichnungStrategy::class);
 
         return $this->render('dashboard/jahrgangsstufe.html.twig', [
             'jahrgangsstufe' => $jgst,

@@ -9,6 +9,7 @@ use App\Grouping\JahrgangsstufeLerneinheitenGrouping;
 use App\Repository\FachRepositoryInterface;
 use App\Repository\LerneinheitRepositoryInterface;
 use App\Sorting\JahrgangsstufeLerneinheitenGroupStrategy;
+use App\Sorting\LerneinheitBezeichnungStrategy;
 use App\Sorting\Sorter;
 use App\View\Filter\JahrgangsstufenFilter;
 use App\View\Filter\KompetenzFilter;
@@ -55,6 +56,7 @@ class ShowFachAction extends AbstractController {
 
         $groups = $this->grouper->group($module, JahrgangsstufeLerneinheitenGrouping::class);
         $this->sorter->sort($groups, JahrgangsstufeLerneinheitenGroupStrategy::class);
+        $this->sorter->sortGroupItems($groups, LerneinheitBezeichnungStrategy::class);
 
         if($jgstFilterView->getAktuelleJahrgangsstufe() !== null) {
             $groups = array_filter($groups, fn(JahrgangsstufeLerneinheitenGroup $group) => $group->getJahrgangsstufe()->getId() === $jgstFilterView->getAktuelleJahrgangsstufe()->getId());
