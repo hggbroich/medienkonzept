@@ -7,7 +7,7 @@ framework:
       missing_import_mode: strict
 
       precompress:
-        format: [ 'zstandard', 'gzip' ]
+        format: [ 'gzip' ]
 
         # if you don't define the following option, AssetMapper will compress all
         # the extensions considered safe (css, js, json, svg, xml, ttf, otf, wasm, etc.)
