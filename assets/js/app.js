@@ -1,10 +1,4 @@
-require('../css/app.scss');
-
 import { Modal, Tooltip, Popover } from "bootstrap";
-
-require('../../vendor/schulit/common-bundle/assets/js/polyfill');
-require('../../vendor/schulit/common-bundle/assets/js/menu');
-require('../../vendor/schulit/common-bundle/assets/js/dropdown-polyfill');
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('[title]').forEach(function(el) {
@@ -20,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             eventName = 'click';
         }
 
-        el.addEventListener(eventName, function (event) {
+        el.addEventListener(eventName, function () {
             let confirmModalSelector = el.getAttribute('data-confirm');
             let form = this.closest('form');
 
@@ -52,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let targetEl = document.querySelector(target);
         updateIcon(el.value, targetEl);
 
-        el.addEventListener('keyup', function(event) {
+        el.addEventListener('keyup', function() {
             updateIcon(el.value, targetEl);
         });
     });

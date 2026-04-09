@@ -50,7 +50,8 @@
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ preload(asset('build/app.css')) }}" type="text/css" >
+    <link rel="stylesheet" href="{{ preload(asset('bundles/common/app.css')) }}" type="text/css">
+    <link rel="stylesheet" href="{{ preload(asset('vendor/@fortawesome/fontawesome-free/css/all.css')) }}" type="text/css">
 
     {% set customCSS = customCSS() %}
     {% if customCSS is not empty %}
@@ -61,5 +62,9 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{{ preload(asset('build/app.js')) }}"></script>
+    <script src="{{ preload(asset('menu.js')) }}"></script>
+
+    {% block importmap %}
+        {{ importmap(['app']) }}
+    {% endblock %}
 {% endblock %}

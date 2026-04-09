@@ -7,8 +7,9 @@
     <title>{% block title %}{% endblock %} | {{ config.name }}</title>
 
     {% block css %}
-        <link rel="stylesheet" href="{{ asset('build/app.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ asset('build/print.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ preload(asset('bundles/common/app.css')) }}" type="text/css">
+        <link rel="stylesheet" href="{{ preload(asset('styles/print.css')) }}" type="text/css">
+        <link rel="stylesheet" href="{{ preload(asset('vendor/@fortawesome/fontawesome-free/css/all.css')) }}" type="text/css">
 
         {% set customCSS = customCSS() %}
         {% if customCSS is not empty %}
